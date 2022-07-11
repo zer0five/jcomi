@@ -26,6 +26,11 @@ public class DatabaseUtil {
         Boolean integratedSecurity = Optional.ofNullable(config.getProperty("database.integratedSecurity")).map(Boolean::parseBoolean).orElse(false);
         Boolean development = Optional.ofNullable(config.getProperty("database.development")).map(Boolean::parseBoolean).orElse(true);
         SQLDriver driver = new MicrosoftSQLDriver(integratedSecurity, development);
+        try {
+            driver.getDriverClass().newInstance();
+        } catch (InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(DatabaseUtil.class.getName()).log(Level.SEVERE, "Could not load driver", ex);
+        }
         SQLSettings settings = driver.getDefaultSettings();
         Optional.ofNullable(config.getProperty("database.username")).ifPresent(settings::setUsername);
         Optional.ofNullable(config.getProperty("database.password")).ifPresent(settings::setPassword);
