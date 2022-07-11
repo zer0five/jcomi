@@ -17,6 +17,7 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import me.kazoku.jcomi.util.DatabaseUtil;
 
 import static me.kazoku.jcomi.util.ThreadUtil.sleep;
 
@@ -27,25 +28,14 @@ public class DBConnectionTestServlet extends HttpServlet {
 
     @Override
     public void init() {
-        Properties config = new Properties();
-        try {
-            config.load(getClass().getResourceAsStream("/config.properties"));
-        } catch (Exception e) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "Could not load config", e);
-        }
-        Boolean integratedSecurity = Optional.ofNullable(config.getProperty("integratedSecurity")).map(Boolean::parseBoolean).orElse(false);
-        Boolean development = Optional.ofNullable(config.getProperty("development")).map(Boolean::parseBoolean).orElse(true);
-        SQLDriver driver = new MicrosoftSQLDriver(integratedSecurity, development);
-        SQLSettings settings = driver.getDefaultSettings();
-        settings.setPassword(config.getProperty("database.password"));
-        this.client = new JavaSQLClient(settings, driver);
+        this.client = DatabaseUtil.createClient();
     }
 
     private void testDatabaseConnection(PrintWriter writer) {
         int retry = 0;
         Optional<SQLException> ex = Optional.empty();
         while (retry++ < 10) {
-            try (Connection ignored = client.getConnection()) {
+            try ( Connection ignored = client.getConnection()) {
                 writer.write("{\"status\": \"success\", \"message\": \"Connection successful (retries: " + retry + ")\"}");
                 return;
             } catch (SQLException e) {
@@ -58,7 +48,7 @@ public class DBConnectionTestServlet extends HttpServlet {
 
     private void doRequest(@SuppressWarnings("unused") HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("application/json");
-        try (PrintWriter writer = response.getWriter()) {
+        try ( PrintWriter writer = response.getWriter()) {
             testDatabaseConnection(writer);
         } catch (IOException e) {
             Logger.getLogger(DBConnectionTestServlet.class.getName()).severe(e.getMessage());
