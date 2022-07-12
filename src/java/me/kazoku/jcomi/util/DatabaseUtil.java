@@ -24,32 +24,20 @@ public class DatabaseUtil {
             Logger.getLogger(DatabaseUtil.class.getName()).log(Level.SEVERE, "Could not load config", e);
         }
         boolean integratedSecurity = Optional.ofNullable(config.getProperty("database.integratedSecurity"))
-                .or(() -> Optional.ofNullable(System.getenv("MSSQL_INTEGRATED_SECURITY")))
                 .map(Boolean::parseBoolean).orElse(false);
         boolean development = Optional.ofNullable(config.getProperty("database.development"))
-                .or(() -> Optional.ofNullable(System.getenv("MSSQL_DEVELOPMENT")))
                 .map(Boolean::parseBoolean).orElse(true);
         SQLDriver driver = new MicrosoftSQLDriver(integratedSecurity, development);
         SQLSettings settings = driver.getDefaultSettings();
         Optional.ofNullable(config.getProperty("database.host"))
-                .filter(s -> !s.isEmpty())
-                .or(() -> Optional.ofNullable(System.getenv("DATABASE_HOST")))
                 .ifPresent(settings::setHost);
         Optional.ofNullable(config.getProperty("database.port"))
-                .filter(s -> !s.isEmpty())
-                .or(() -> Optional.ofNullable(System.getenv("DATABASE_PORT")))
                 .ifPresent(settings::setPort);
         Optional.ofNullable(config.getProperty("database.username"))
-                .filter(s -> !s.isEmpty())
-                .or(() -> Optional.ofNullable(System.getenv("DATABASE_USERNAME")))
                 .ifPresent(settings::setUsername);
         Optional.ofNullable(config.getProperty("database.password"))
-                .filter(s -> !s.isEmpty())
-                .or(() -> Optional.ofNullable(System.getenv("DATABASE_PASSWORD")))
                 .ifPresent(settings::setPassword);
         Optional.ofNullable(config.getProperty("database.name"))
-                .filter(s -> !s.isEmpty())
-                .or(() -> Optional.ofNullable(System.getenv("DATABASE_NAME")))
                 .ifPresent(settings::setDatabase);
         return new JavaSQLClient(settings, driver);
     }
