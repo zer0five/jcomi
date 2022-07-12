@@ -1,5 +1,6 @@
 package me.kazoku.jcomi.util;
 
+import java.sql.Driver;
 import me.kazoku.core.database.sql.SQLDriver;
 import me.kazoku.core.database.sql.SQLSettings;
 import me.kazoku.core.database.sql.client.JavaSQLClient;
@@ -23,20 +24,29 @@ public class DatabaseUtil {
         } catch (Exception e) {
             Logger.getLogger(DatabaseUtil.class.getName()).log(Level.SEVERE, "Could not load config", e);
         }
-        Boolean integratedSecurity = Optional.ofNullable(config.getProperty("database.integratedSecurity")).map(Boolean::parseBoolean).orElse(false);
-        Boolean development = Optional.ofNullable(config.getProperty("database.development")).map(Boolean::parseBoolean).orElse(true);
+        boolean integratedSecurity = Optional.ofNullable(config.getProperty("database.integratedSecurity"))
+                .or(() -> Optional.ofNullable(System.getenv("MSSQL_INTEGRATED_SECURITY")))
+                .map(Boolean::parseBoolean).orElse(false);
+        boolean development = Optional.ofNullable(config.getProperty("database.development"))
+                .or(() -> Optional.ofNullable(System.getenv("MSSQL_DEVELOPMENT")))
+                .map(Boolean::parseBoolean).orElse(true);
         SQLDriver driver = new MicrosoftSQLDriver(integratedSecurity, development);
-        try {
-            driver.getDriverClass().newInstance();
-        } catch (InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(DatabaseUtil.class.getName()).log(Level.SEVERE, "Could not load driver", ex);
-        }
         SQLSettings settings = driver.getDefaultSettings();
-        Optional.ofNullable(config.getProperty("database.username")).ifPresent(settings::setUsername);
-        Optional.ofNullable(config.getProperty("database.password")).ifPresent(settings::setPassword);
-        Optional.ofNullable(config.getProperty("database.name")).ifPresent(settings::setDatabase);
-        Optional.ofNullable(config.getProperty("database.host")).ifPresent(settings::setHost);
-        Optional.ofNullable(config.getProperty("database.port")).ifPresent(settings::setPort);
+        Optional.ofNullable(config.getProperty("database.host"))
+                .or(() -> Optional.ofNullable(System.getenv("DATABASE_HOST")))
+                .ifPresent(settings::setHost);
+        Optional.ofNullable(config.getProperty("database.port"))
+                .or(() -> Optional.ofNullable(System.getenv("DATABASE_PORT")))
+                .ifPresent(settings::setPort);
+        Optional.ofNullable(config.getProperty("database.username"))
+                .or(() -> Optional.ofNullable(System.getenv("DATABASE_USERNAME")))
+                .ifPresent(settings::setUsername);
+        Optional.ofNullable(config.getProperty("database.password"))
+                .or(() -> Optional.ofNullable(System.getenv("DATABASE_PASSWORD")))
+                .ifPresent(settings::setPassword);
+        Optional.ofNullable(config.getProperty("database.name"))
+                .or(() -> Optional.ofNullable(System.getenv("DATABASE_NAME")))
+                .ifPresent(settings::setDatabase);
         return new JavaSQLClient(settings, driver);
     }
 
