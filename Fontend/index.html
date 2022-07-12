@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comic page</title>
+    <!--! boostrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!--! font chữ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400&display=swap" rel="stylesheet">
+    <!--! CSS -->
+    <link rel="stylesheet" href="styleSearchComic.css">
+    <!--! javascript -->
+    <script src="https://kit.fontawesome.com/d565fa5546.js" crossorigin="anonymous"></script>
+    <script>
+        // Get the modal
+        var modal = document.getElementById('id01');
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        const searchButton = document.getElementById('search-button');
+        const searchInput = document.getElementById('search-input');
+        searchButton.addEventListener('click', () => {
+            const inputValue = searchInput.value;
+            alert(inputValue);
+        });
+    </script>
+
+</head>
+
+<body>
+    <!--! header -->
+    <section class="header">
+        <div class="top-area py-1">
+            <div class="container search">
+                <div class="row align-items-center justify-content-between justify-content-lg-start">
+                    <div class="col-lg-3 mr-lg-10">
+                        <div class="logo">
+                            <a href="">
+                                <img src="https://dummyimage.com/164x34/000/fff" alt="Zero Five comic">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row-reverse bd-highlight justify-content-end R-L col-lg-3">
+
+                        <div class="p-2 m-1 bd-highlight"><button class="btn-login btn btn-primary btn-sm"
+                                onclick="document.getElementById('id01').style.display='block'">Login</button>
+                            <!-- The Modal -->
+                            <div id="id01" class="modal">
+                                <span onclick="document.getElementById('id01').style.display='none'" class="close"
+                                    title="Close Modal">&times;</span>
+
+                                <!-- Modal Content -->
+                                <form class="form-login modal-content animate" action="" style="width: 40.75rem;">
+                                    <div class="imgcontainer">
+                                        <h1>Login</h1>
+                                    </div>
+
+                                    <div class="container">
+                                        <label for="uname"><b>Username</b></label>
+                                        <input type="text" placeholder="Enter Username" name="uname" required>
+
+                                        <label for="psw"><b>Password</b></label>
+                                        <input type="password" placeholder="Enter Password" name="psw" required>
+                                        <div class="row">
+                                            <button type="submit" class="btn btn-success btn-login">Login</button>
+                                            <label>
+                                                <input type="checkbox" checked="checked" name="remember"> Remember me
+                                            </label>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="container" style="background-color:#f1f1f1">
+                                        <button type="button"
+                                            onclick="document.getElementById('id01').style.display='none'"
+                                            class="cancelbtn border rounded">Cancel</button>
+                                        <span class="psw">Forgot <a href="#">password?</a></span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="p-2 m-1 "><button class="btn btn-primary btn-sm me-md-2"
+                                type="button">Register</button>
+                        </div>
+
+                        <div class="input-group col-lg-3 ms-5 ">
+                            <div class="form-outline mt-2">
+                                <input id="search-input" type="search" id="form1" class="form-control border-right-0"
+                                    placeholder="Search" />
+                                <div class="form-notch">
+                                    <div class="form-notch-leading"></div>
+                                    <div class="fotm-notch-middle"></div>
+                                    <div class="form-notch-trailing"></div>
+                                </div>
+                            </div>
+                            <button id="" type="button" class="btn btn-primary btn-sm search-button mt-2"
+                                style="height: 2.375rem;">
+                                <span class="fas fa-search"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!--! navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item title">
+                            <a class="nav-link text-light active" aria-current="page" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item dropdown title1">
+                            <a class="btn btn-dark dropdown-toggle text-light genre-button" href="#" role="button"
+                                id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                Genre
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Romance</a></li>
+                                <li><a class="dropdown-item" href="#">Comedy</a></li>
+                                <li><a class="dropdown-item" href="searchComic.html">Others</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item title1">
+                            <a class="nav-link text-light" href="searchComic.html" target="_self">Search Comic</a>
+                        </li>
+                        <li class="nav-item title1">
+                            <a class="nav-link text-light" href="uploadComic.html" target="_self">Upload</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </section>
+
+    <!--! middel -->
+    <section class="middel">
+        <div class="container middel-carousel">
+            <div class="carousel slide" data-bs-ride="carousel" data-bs-interval="1500">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="https://dummyimage.com/550x250/e077e0/f7fafa" class="d-block w-100 img-caeousel"
+                            alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://dummyimage.com/550x250/5faed9/f7fafa" class="d-block w-100 img-caeousel"
+                            alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://dummyimage.com/550x250/d4e88e/f7fafa" class="d-block w-100 img-caeousel"
+                            alt="...">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container ">
+            <div class="section-heading mb-4 font-12x font-bold pl-1 grid-heading py-1">
+                <div class=" d-flex align-items-center">
+                    <h2 class="fw-bold border-danger border-start border-3 ps-3"> Updated Comic</h2>
+                </div>
+            </div>
+
+            <div>
+                <div class="row text-center">
+                    <div class="col-md-3 col-sm-6 comic_frame">
+                        <div class="card bg-light text-dark border-0 bg-transparent" data-bs-toggle="popover"
+                            title="Popover title" data-bs-trigger="hover focus" data-bs-content="Disabled popover">
+                            <a href=""> <img class="card-img-top rounded-3 shadow"
+                                    src="https://via.placeholder.com/180x200" alt="Card image cap"></a>
+                            <div class="card-body text-center bg-transparent ">
+
+                                <a href="https://via.placeholder.com/180x200"
+                                    class="text-dark text-capitalize fw-bold d-block text-truncate text-decoration-none">thám
+                                    tử conan</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-3 col-sm-6 comic_frame">
+                        <div class="card bg-light text-dark border-0 bg-transparent" data-bs-toggle="popover"
+                            title="Popover title" data-bs-trigger="hover focus" data-bs-content="Disabled popover">
+                            <a href=""> <img class="card-img-top rounded-3 shadow"
+                                    src="https://via.placeholder.com/180x200" alt="Card image cap"></a>
+                            <div class="card-body text-center bg-transparent ">
+
+                                <a href="https://via.placeholder.com/180x200"
+                                    class="text-dark text-capitalize fw-bold d-block text-truncate text-decoration-none">thám
+                                    tử conan</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-3 col-sm-6 comic_frame">
+                        <div class="card bg-light text-dark border-0 bg-transparent" data-bs-toggle="popover"
+                            title="Popover title" data-bs-trigger="hover focus" data-bs-content="Disabled popover">
+                            <a href=""> <img class="card-img-top rounded-3 shadow"
+                                    src="https://via.placeholder.com/180x200" alt="Card image cap"></a>
+                            <div class="card-body text-center bg-transparent ">
+
+                                <a href="https://via.placeholder.com/180x200"
+                                    class="text-dark text-capitalize fw-bold d-block text-truncate text-decoration-none">thám
+                                    tử conan</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-3 col-sm-6 comic_frame">
+                        <div class="card bg-light text-dark border-0 bg-transparent" data-bs-toggle="popover"
+                            title="Popover title" data-bs-trigger="hover focus" data-bs-content="Disabled popover">
+                            <a href=""> <img class="card-img-top rounded-3 shadow"
+                                    src="https://via.placeholder.com/180x200" alt="Card image cap"></a>
+                            <div class="card-body text-center bg-transparent ">
+
+                                <a href="https://via.placeholder.com/180x200"
+                                    class="text-dark text-capitalize fw-bold d-block text-truncate text-decoration-none">thám
+                                    tử conan</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="row text-center">
+                    <div class="col-md-3 col-sm-6 comic_frame">
+                        <div class="card bg-light text-dark border-0 bg-transparent" data-bs-toggle="popover"
+                            title="Popover title" data-bs-trigger="hover focus" data-bs-content="Disabled popover">
+                            <a href=""> <img class="card-img-top rounded-3 shadow"
+                                    src="https://via.placeholder.com/180x200" alt="Card image cap"></a>
+                            <div class="card-body text-center bg-transparent ">
+
+                                <a href="https://via.placeholder.com/180x200"
+                                    class="text-dark text-capitalize fw-bold d-block text-truncate text-decoration-none">thám
+                                    tử conan</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-3 col-sm-6 comic_frame">
+                        <div class="card bg-light text-dark border-0 bg-transparent" data-bs-toggle="popover"
+                            title="Popover title" data-bs-trigger="hover focus" data-bs-content="Disabled popover">
+                            <a href=""> <img class="card-img-top rounded-3 shadow"
+                                    src="https://via.placeholder.com/180x200" alt="Card image cap"></a>
+                            <div class="card-body text-center bg-transparent ">
+
+                                <a href="https://via.placeholder.com/180x200"
+                                    class="text-dark text-capitalize fw-bold d-block text-truncate text-decoration-none">thám
+                                    tử conan</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-3 col-sm-6 comic_frame">
+                        <div class="card bg-light text-dark border-0 bg-transparent" data-bs-toggle="popover"
+                            title="Popover title" data-bs-trigger="hover focus" data-bs-content="Disabled popover">
+                            <a href=""> <img class="card-img-top rounded-3 shadow"
+                                    src="https://via.placeholder.com/180x200" alt="Card image cap"></a>
+                            <div class="card-body text-center bg-transparent ">
+
+                                <a href="https://via.placeholder.com/180x200"
+                                    class="text-dark text-capitalize fw-bold d-block text-truncate text-decoration-none">thám
+                                    tử conan</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-3 col-sm-6 comic_frame">
+                        <div class="card bg-light text-dark border-0 bg-transparent" data-bs-toggle="popover"
+                            title="Popover title" data-bs-trigger="hover focus" data-bs-content="Disabled popover">
+                            <a href=""> <img class="card-img-top rounded-3 shadow"
+                                    src="https://via.placeholder.com/180x200" alt="Card image cap"></a>
+                            <div class="card-body text-center ">
+
+                                <a href="https://via.placeholder.com/180x200"
+                                    class="text-dark text-capitalize fw-bold d-block text-truncate text-decoration-none">thám
+                                    tử conan</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--! footer -->
+    <section class="footer bg-dark">
+        <div class="container">
+            <a href="" class="" rel="home">
+                <img src="https://via.placeholder.com/365x70" class="logo_footer">
+            </a>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl)
+        })
+    </script>
+</body>
+
+</html>
