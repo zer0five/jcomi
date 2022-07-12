@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comic page</title>
+    <!--! boostrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!--! font chữ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400&display=swap" rel="stylesheet">
+    <!--! CSS -->
+    <link rel="stylesheet" href="styleSearchComic.css">
+    <!--! javascript -->
+    <script src="https://kit.fontawesome.com/d565fa5546.js" crossorigin="anonymous"></script>
+    <script>
+        // Get the modal
+        var modal = document.getElementById('id01');
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        $(document).ready(function (e) {
+            $('.search-panel .dropdown-menu').find('a').click(function (e) {
+                e.preventDefault();
+                var param = $(this).attr("href").replace("#", "");
+                var concept = $(this).text();
+                $('.search-panel span#search_concept').text(concept);
+                $('.input-group #search_param').val(param);
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <!--! header -->
+    <section class="header">
+        <div class="top-area py-1">
+            <div class="container search">
+                <div class="row align-items-center justify-content-between justify-content-lg-start">
+                    <div class="col-lg-3 mr-lg-10">
+                        <div class="logo">
+                            <a href="">
+                                <img src="https://dummyimage.com/164x34/000/fff" alt="Zero Five comic">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row-reverse bd-highlight justify-content-end R-L col-lg-4">
+
+                        <div class="p-2 m-1 bd-highlight"><button class="btn-login btn btn-primary"
+                                onclick="document.getElementById('id01').style.display='block'">Login</button>
+                            <!-- The Modal -->
+                            <div id="id01" class="modal">
+                                <span onclick="document.getElementById('id01').style.display='none'" class="close"
+                                    title="Close Modal">&times;</span>
+
+                                <!-- Modal Content -->
+                                <form class="form-login modal-content animate" action="" style="width: 40.75rem;">
+                                    <div class="imgcontainer">
+                                        <h1>Login</h1>
+                                    </div>
+
+                                    <div class="container">
+                                        <label for="uname"><b>Username</b></label>
+                                        <input type="text" placeholder="Enter Username" name="uname" required>
+
+                                        <label for="psw"><b>Password</b></label>
+                                        <input type="password" placeholder="Enter Password" name="psw" required>
+                                        <div class="row">
+                                            <button type="submit" class="btn btn-success btn-login">Login</button>
+                                            <label>
+                                                <input type="checkbox" checked="checked" name="remember"> Remember me
+                                            </label>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="container" style="background-color:#f1f1f1">
+                                        <button type="button"
+                                            onclick="document.getElementById('id01').style.display='none'"
+                                            class="cancelbtn border rounded">Cancel</button>
+                                        <span class="psw">Forgot <a href="#">password?</a></span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="p-2 m-1 "><button class="btn btn-primary me-md-2" type="button">Register</button>
+                        </div>
+                        <div class="input-group  col-lg-3 ">
+                            <input type="hidden" name="search_param" value="all" id="search_param">
+                            <input type="search" class="form-control rounded-3" name="x" placeholder="Search">
+                            <span class="py-1 mt-1 input-group-btn search-button">
+                                <button id="search-button" type="button" class="btn btn-default btn-lg">
+                                    <span class="fas fa-search"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item title">
+                            <a class="nav-link text-light active" aria-current="page" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item dropdown title1">
+                            <a class="btn btn-dark dropdown-toggle text-light genre-button" href="#" role="button"
+                                id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                Genre
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Romance</a></li>
+                                <li><a class="dropdown-item" href="#">Comedy</a></li>
+                                <li><a class="dropdown-item" href="searchComic.html">Others</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item title1">
+                            <a class="nav-link text-light" href="searchComic.html" tabindex="-1"
+                                aria-disabled="true">Search Comic</a>
+                        </li>
+                        <li class="nav-item title1">
+                            <a class="nav-link text-light" target="_self">Upload</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </section>
+    <!--! middel -->
+    <section class="middel">
+        <div class="main-homepage container ">
+            <div class="homepage-tags fw-bold inner d-flex align-items-center">
+                <h2 class="fw-bold border-danger border-start border-3 ps-3"> Advanced Search</h2>
+            </div>
+            <div class="border rounded shadow-lg p-5">
+                <div class="form-group row list-genre">
+                    <div class="label-search fw-bold">
+                        Story genre
+                    </div>
+                    <div class="row">
+                        <div class="genre-item col-lg-3 col-md-3 col-sm-3"
+                            title="This genre typically has content concerning fighting, violence, chaos, with fast action">
+                            <input type="checkbox">
+                            <span class="icon checkbox">Action</span>
+                        </div>
+                        <div class="genre-item col-lg-3 col-md-3 col-sm-3"
+                            title="Genre that deals with sensitive issues, 17+ only">
+                            <input type="checkbox">
+                            <span class="icon checkbox">Adult</span>
+                        </div>
+                        <div class="genre-item col-lg-3 col-md-3 col-sm-3"
+                            title="Adventure genre, adventure, usually the journey of the characters">
+                            <input type="checkbox">
+                            <span class="icon checkbox">Adventure</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="genre-item col-lg-3 col-md-3 col-sm-3"
+                            title="The story has been adapted into an Anime movie">
+                            <input type="checkbox">
+                            <span class="icon checkbox">Anime</span>
+                        </div>
+
+                        <div class="genre-item col-lg-3 col-md-3 col-sm-3"
+                            title="Genre with pure and touching content, typically with amusing details, mild conflicts">
+                            <input type="checkbox">
+                            <span class="icon checkbox">Comedy</span>
+                        </div>
+                        <div class="genre-item col-lg-3 col-md-3 col-sm-3" title="Comics Europe and America">
+                            <input type="checkbox">
+                            <span class="icon checkbox">Comic</span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="genre-item col-lg-3 col-md-3 col-sm-3" title="Demons">
+                            <input type="checkbox">
+                            <span class="icon checkbox">Demons</span>
+                        </div>
+                        <div class="genre-item col-lg-3 col-md-3 col-sm-3" title="Genre investigation, detective.">
+                            <input type="checkbox">
+                            <span class="icon checkbox">Detective</span>
+                        </div>
+                        <div class="genre-item col-lg-3 col-md-3 col-sm-3"
+                            title="Genre of fan fiction or presumably even Mangakas that are totally different from the first author. Doujinshi creators typically draw on original characters to put in writing stories in line with their preferences.">
+                            <input type="checkbox">
+                            <span class="icon checkbox">Drama</span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="genre-item col-lg-3 col-md-3 col-sm-3"
+                            title="There are often sensitive situations to attract viewers">
+                            <input type="checkbox">
+                            <span class="icon checkbox">Ecchi</span>
+                        </div>
+                        <div class="genre-item col-lg-3 col-md-3 col-sm-3"
+                            title="Genre comes from wealthy imagination, from magic to dream global even fairy tales">
+                            <input type="checkbox">
+                            <span class="icon checkbox">Fantasy</span>
+                        </div>
+                        <div class="genre-item col-lg-3 col-md-3 col-sm-3"
+                            title="Is a genre in which the gender of the character is confused: male becomes female, female becomes male...">
+                            <input type="checkbox">
+                            <span class="icon checkbox">Gender Bender</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="form-group text-center">
+                        <a class="btn btn-primary btn-sm m-3 px-3">Reset</a>
+                    </div>
+                </div>
+
+                <div class="form-group row option">
+                    <div class="label-search col-lg-3 col-sm-2 text-center">Country</div>
+                    <select class="mdb-select sm-form col-lg-3 col-sm-2 border rounded">
+                        <option value="1">all</option>
+                        <option value="2">China</option>
+                        <option value="3">Korea</option>
+                        <option value="4">Viet Nam</option>
+                        <option value="3">Japan</option>
+                    </select>
+                    <div class="label-search col-lg-3 col-sm-2 text-center">Status</div>
+                    <select class="mdb-select sm-form col-lg-3 col-sm-2 border rounded">
+                        <option value="1">all</option>
+                        <option value="2">Updating</option>
+                        <option value="3">Complete</option>
+                    </select>
+
+                </div>
+                <div class="form-group row option">
+                    <div class="label-search col-lg-3 col-sm-2 text-center">Number of chapters</div>
+                    <select class="mdb-select sm-form col-lg-3 col-sm-2 border rounded ">
+                        <option value="1"> > 0</option>
+                        <option value="2"> >= 50</option>
+                        <option value="3"> >= 100</option>
+                        <option value="4"> >= 200</option>
+                        <option value="5"> >= 300</option>
+                    </select>
+                    <div class="label-search col-lg-3 col-sm-2 text-center">Sort</div>
+                    <select class="mdb-select sm-form col-lg-3 col-sm-2 border rounded ">
+                        <option value="1">Posting date descending</option>
+                        <option value="2">Posting date increment</option>
+                        <option value="3">Update date descending</option>
+                        <option value="4">Update date increment</option>
+                        <option value="5">Views are decreasing</option>
+                        <option value="6">Views are increment</option>
+                    </select>
+                </div>
+                <div>
+                    <div class="form-group text-center">
+                        <a class="btn btn-success btn-sm m-3 px-3">Search</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--! footer -->
+    <section class="footer bg-dark">
+        <div class="container">
+            <a href="" class="" rel="home">
+                <img src="https://via.placeholder.com/365x70" class="logo_footer">
+            </a>
+        </div>
+    </section>
+</body>
