@@ -1,9 +1,6 @@
 package me.kazoku.jcomi;
 
-import me.kazoku.core.database.sql.SQLDriver;
-import me.kazoku.core.database.sql.SQLSettings;
 import me.kazoku.core.database.sql.client.JavaSQLClient;
-import me.kazoku.core.database.sql.driver.MicrosoftSQLDriver;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,8 +11,6 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Optional;
-import java.util.Properties;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import me.kazoku.jcomi.util.DatabaseUtil;
 
