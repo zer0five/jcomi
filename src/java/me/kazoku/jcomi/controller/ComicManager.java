@@ -4,7 +4,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.kazoku.core.database.sql.client.JavaSQLClient;
 import me.kazoku.jcomi.entity.Comic;
-import me.kazoku.jcomi.entity.Comics;
 import me.kazoku.jcomi.util.DatabaseUtil;
 
 import javax.servlet.ServletException;
@@ -42,7 +41,7 @@ public class ComicManager extends HttpServlet {
                     break;
             }
         }
-        try (PrintWriter writer = response.getWriter()) {
+        try ( PrintWriter writer = response.getWriter()) {
             JsonObject json = new JsonObject();
             Optional<Integer> id = Optional.ofNullable(request.getParameter("id")).map(Integer::parseInt);
             if (id.isPresent()) {
@@ -92,7 +91,7 @@ public class ComicManager extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
-        try (PrintWriter writer = response.getWriter()) {
+        try ( PrintWriter writer = response.getWriter()) {
             JsonObject json = new JsonObject();
             Optional<Integer> id = Optional.ofNullable(request.getParameter("id")).map(Integer::parseInt);
             if (id.isPresent()) {
