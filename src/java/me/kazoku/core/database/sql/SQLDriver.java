@@ -6,11 +6,12 @@ import java.sql.Driver;
  * @author Kazoku
  * @version 1.0
  * <p>
- * This interface is used to define the SQL driver that will
- * be used to connect to the database.
+ * This interface is used to define the SQL driver that will be used to connect
+ * to the database.
  * @since 2022-07-01
  */
 public interface SQLDriver {
+
     Class<? extends Driver> getDriverClass();
 
     default String createUrl(SQLSettings settings) {
@@ -21,9 +22,9 @@ public interface SQLDriver {
         builder.append(settings.getHost());
         builder.append(':');
         builder.append(settings.getPort());
-        builder.append(settings.getDriverPropertiesString(";", ";"));
         settings.getDatabase()
-            .ifPresent(database -> builder.append(";databaseName=").append(database));
+                .ifPresent(database -> settings.setDriverProperty("databaseName", database));
+        builder.append(settings.getDriverPropertiesString(";", ";"));
         return builder.toString();
     }
 
