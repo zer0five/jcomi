@@ -41,7 +41,7 @@ public class JavaSQLClient extends BaseSQLClient<Properties> {
             Driver nativeDriver = this.driver.getDriverClass().getConstructor(new Class<?>[0]).newInstance(new Object[0]);
             return nativeDriver.connect(this.driver.createUrl(settings), properties);
         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-            Logger.getLogger(JavaSQLClient.class.getName()).log(Level.SEVERE, "Cannot get connection from native driver", ex);
+            Logger.getLogger(JavaSQLClient.class.getName()).log(Level.WARNING, "Cannot get connection from native driver", ex);
         }
         return DriverManager.getConnection(this.driver.createUrl(settings), properties);
     }
