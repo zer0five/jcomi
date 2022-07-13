@@ -3,7 +3,7 @@
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
     <div class="container">
         <a class="navbar-brand" href="${pageContext.request.contextPath}/">
-            <img src="${pageContext.request.contextPath}/assets/logo.svg" alt="logo">
+            <img src="${pageContext.request.contextPath}/assets/logo.svg" alt="logo" style="width: 160px">
         </a>
         <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
                 data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
