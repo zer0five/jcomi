@@ -36,7 +36,7 @@ public class Register extends HttpServlet {
         JsonObject json = new JsonObject();
         Optional<String> username = Optional.ofNullable(request.getParameter("username"));
         Optional<String> email = Optional.ofNullable(request.getParameter("email"));
-        Optional<String> passsword = Optional.ofNullable(request.getParameter("passsword"));
+        Optional<String> passsword = Optional.ofNullable(request.getParameter("password"));
         if (username.isPresent() && email.isPresent() && passsword.isPresent()) {
             try {
                 Optional<Account> account = accounts.getOne(username.get());

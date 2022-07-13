@@ -35,7 +35,7 @@ public class Login extends HttpServlet {
 
         JsonObject json = new JsonObject();
         Optional<String> username = Optional.ofNullable(request.getParameter("username"));
-        Optional<String> passsword = Optional.ofNullable(request.getParameter("passsword"));
+        Optional<String> passsword = Optional.ofNullable(request.getParameter("password"));
         if (username.isPresent() && passsword.isPresent()) {
             try {
                 Optional<Account> account = accounts.getOne(username.get());
