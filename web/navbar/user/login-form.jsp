@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<form action="${pageContext.request.contextPath}/login" method="post" class="row g-3 needs-validation" novalidate>
+<form action="${pageContext.request.contextPath}/authentication/login" method="post" class="row g-3 needs-validation" novalidate>
     <div class="input-group col-12">
         <label for="username" class="input-group-text rounded-pill rounded-end bg-light px-3">
             <i class="bi bi-person" aria-hidden="true"></i>
