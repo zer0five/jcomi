@@ -29,7 +29,7 @@ public class Comment implements DataTransferObject {
         this.ComicId = resultSet.getInt("Comic_ID");
         this.AccountId = resultSet.getInt("Account_ID");
         this.Content = resultSet.getString("Content");
-        this.PostedDate = resultSet.getLong("Posted_Date1`");
+        this.PostedDate = resultSet.getLong("Posted_Date");
 
     }
     public static Comment fromJson(JsonObject json) {
