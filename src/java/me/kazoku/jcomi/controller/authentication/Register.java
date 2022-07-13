@@ -36,8 +36,8 @@ public class Register extends HttpServlet {
         JsonObject json = new JsonObject();
         Optional<String> username = Optional.ofNullable(request.getParameter("username"));
         Optional<String> email = Optional.ofNullable(request.getParameter("email"));
-        Optional<String> passsword = Optional.ofNullable(request.getParameter("password"));
-        if (username.isPresent() && email.isPresent() && passsword.isPresent()) {
+        Optional<String> password = Optional.ofNullable(request.getParameter("password"));
+        if (username.isPresent() && email.isPresent() && password.isPresent()) {
             try {
                 Optional<Account> account = accounts.getOne(username.get());
                 if (account.isPresent()) {
@@ -49,7 +49,7 @@ public class Register extends HttpServlet {
                         json.addProperty("status", "error");
                         json.addProperty("message", "Account existed");
                     } else {
-                        String hash = MD5.getMd5(passsword.get());
+                        String hash = MD5.getMd5(password.get());
                         Account newAccount = new Account(0, username.get(),email.get());
                         newAccount.setPassword(hash);
                         Optional.ofNullable(request.getParameter("display-name")).ifPresent(newAccount::setDisplayName);      

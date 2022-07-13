@@ -35,12 +35,12 @@ public class Login extends HttpServlet {
 
         JsonObject json = new JsonObject();
         Optional<String> username = Optional.ofNullable(request.getParameter("username"));
-        Optional<String> passsword = Optional.ofNullable(request.getParameter("password"));
-        if (username.isPresent() && passsword.isPresent()) {
+        Optional<String> password = Optional.ofNullable(request.getParameter("password"));
+        if (username.isPresent() && password.isPresent()) {
             try {
                 Optional<Account> account = accounts.getOne(username.get());
                 if (account.isPresent()) {
-                    String hash = MD5.getMd5(passsword.get());
+                    String hash = MD5.getMd5(password.get());
                     if (hash.equals(account.get().getPassword())) {
                         json.addProperty("status", "success");
                         json.addProperty("message", "Login succesfully");
