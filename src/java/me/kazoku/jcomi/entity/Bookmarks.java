@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import me.kazoku.core.database.sql.client.JavaSQLClient;
 
-public class Bookmarks implements DataAccessObject<Comment> {
+public class Bookmarks implements DataAccessObject<Bookmark> {
 
     private JavaSQLClient client;
     private Connection connection;
@@ -19,8 +19,8 @@ public class Bookmarks implements DataAccessObject<Comment> {
     }
 
     @Override
-    public int insert(Comment object) throws SQLException {
-        String sql = "INSERT INTO [Comment] (Comic_ID, Account_ID) VALUES (?, ?)";
+    public int insert(Bookmark object) throws SQLException {
+        String sql = "INSERT INTO [Bookmarks] (Comic_ID, Account_ID) VALUES (?, ?)";
         Connection connection = getConnection();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, object.getComicId());
@@ -30,33 +30,31 @@ public class Bookmarks implements DataAccessObject<Comment> {
     }
 
     @Override
-    public int update(Comment object) throws SQLException {
-        String sql = "UPDATE [Comment] SET Comic_ID = ?, Account_ID = ?, Content = ?, Post_Date = ? WHERE id = ?";
+    public int update(Bookmark object) throws SQLException {
+        String sql = "UPDATE [Bookmarks] SET Comic_ID = ?, Account_ID = ? WHERE id = ?";
         Connection connection = getConnection();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, object.getComicId());
             statement.setInt(2, object.getAccountId());
-            statement.setString(3, object.getContent());
-            statement.setLong(4, object.getPostedDate());
             return statement.executeUpdate();
         }
     }
 
     @Override
-    public int delete(Comment object) throws SQLException {
+    public int delete(Bookmark object) throws SQLException {
         return delete(object.getId());
     }
 
     public int delete(int id) throws SQLException {
-        String sql = "DELETE FROM [Comment] WHERE id = ?";
+        String sql = "DELETE FROM [Bookmarks] WHERE id = ?";
         Connection connection = getConnection();
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, id);
         return statement.executeUpdate();
     }
 
-    private ResultSet queryComment(Object identifier) throws SQLException {
-        StringBuilder sql = new StringBuilder("SELECT * FROM [Comment]");
+    private ResultSet queryBookmark(Object identifier) throws SQLException {
+        StringBuilder sql = new StringBuilder("SELECT * FROM [Bookmarks]");
         List<Object> where = new ArrayList<>();
         if (identifier instanceof Integer) {
             sql.append("WHERE [ID] = ?");
@@ -71,21 +69,21 @@ public class Bookmarks implements DataAccessObject<Comment> {
     }
 
     @Override
-    public List<Comment> get(Object identifier) throws SQLException {
-        List<Comment> comments = new ArrayList<>();
-        try (ResultSet resultSet = queryComment(identifier)) {
+    public List<Bookmark> get(Object identifier) throws SQLException {
+        List<Bookmark> bookmarks = new ArrayList<>();
+        try (ResultSet resultSet = queryBookmark(identifier)) {
             while (!resultSet.isClosed() && resultSet.next()) {
-                comments.add(new Comment(resultSet));
+                bookmarks.add(new Bookmark(resultSet));
             }
         }
-        return comments;
+        return bookmarks;
     }
 
     @Override
-    public Optional<Comment> getOne(Object identifier) throws SQLException {
-        try (ResultSet resultSet = queryComment(identifier)) {
+    public Optional<Bookmark> getOne(Object identifier) throws SQLException {
+        try (ResultSet resultSet = queryBookmark(identifier)) {
             if (!resultSet.isClosed() && resultSet.next()) {
-                return Optional.of(new Comment(resultSet));
+                return Optional.of(new Bookmark(resultSet));
             }
         }
         return Optional.empty();
@@ -96,5 +94,5 @@ public class Bookmarks implements DataAccessObject<Comment> {
             connection = client.getConnection();
         }
         return connection;
-    }
+    }  
 }
