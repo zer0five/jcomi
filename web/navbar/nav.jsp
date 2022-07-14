@@ -14,9 +14,7 @@
             margin-top: 0;
         }
     }
-    .dropdown-menu {
-        min-width: 200px;
-    }
+    
 
     .dropdown-menu.columns {
         min-width: 600px;
@@ -38,7 +36,7 @@
         white-space: normal;
     }
     .multi-column-dropdown li a:hover {
-        text-decoration: none;
+        
         color: #262626;
         background-color: #999;
     }
@@ -58,7 +56,7 @@
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
     <div class="container">
         <a class="navbar-brand" href="${pageContext.request.contextPath}/">
-            <img src="${pageContext.request.contextPath}/assets/logo.svg" alt="logo" style="width: 160px">
+            <img src="${pageContext.request.contextPath}/assets/logo.svg" alt="logo" style="width: 120px">
         </a>
 
         <div class="navbar-nav me-lg-auto mt-sm-2 mt-lg-0">
@@ -70,7 +68,7 @@
                 </button>
             </div>
         </div>
-        <div class="d-flex">
+        <div class="d-flex mt-3 mt-sm-0">
             <jsp:include page="user/auth-buttons.jsp"/>
         </div>
     </div>
@@ -92,8 +90,8 @@
                 <!-- drop down menu -->
                 <li class="nav-item dropdown">
                     <a class="nav-link  dropdown-toggle" href="#" data-bs-toggle="dropdown"> Genre </a>
-                    <ul class="dropdown-menu multi-column columns">
-                        <div class="row ps-5 ps-md-0">
+                    <ul class="dropdown-menu multi-column columns w-100">
+                        <div class="row ps-4 ps-md-0">
                             <div class="col-md-4 col-3">
                                 <ul class="multi-column-dropdown">
                                     <li><a href="#">Something</a></li>
