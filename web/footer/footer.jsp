@@ -33,7 +33,7 @@
 
                 <!--Grid column-->
                 <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                    <h5 class="text-uppercase">Quick access</h5>
+                    <h5 class="text-uppercase pb-4">Quick access</h5>
 
                     <ul class="list-unstyled mb-0 ">
                         <li>
@@ -62,7 +62,7 @@
         <!-- Grid container -->
 
         <!-- Copyright -->
-        <div class="text-center text-white p-3 bg-secondary">
+        <div class="text-center text-white p-3  bg-secondary">
             © 2022 Copyright:
             <a class="text-white" href="#">Group 5 zerofive</a>
         </div>

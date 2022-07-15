@@ -72,8 +72,8 @@
         </a>
 
         <div class="navbar-nav me-auto mt-sm-2 mt-lg-0">
-            <div class="input-group rounded-pill shadow-sm">
-                <input type="text" class="form-control rounded-pill rounded-end ps-4" id="search-box"
+            <div class="input-group rounded-pill shadow-sm ">
+                <input type="text" class="form-control rounded-pill rounded-end ps-4 " id="search-box"
                        placeholder="Search">
                 <button class="btn btn-outline-primary px-3 rounded-pill rounded-start" type="button">
                     <i class="bi bi-search" aria-hidden="true"></i>
