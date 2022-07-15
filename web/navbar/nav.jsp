@@ -6,6 +6,8 @@
             display: none;
         }
 
+
+
         .navbar .nav-item:hover .dropdown-menu {
             display: block;
         }
@@ -14,20 +16,30 @@
             margin-top: 0;
         }
     }
-    
 
-    .dropdown-menu.columns {
+    .dropdown-menu {
+        min-width: 200px;
+    }
+
+    .dropdown-menu.columns-2 {
+        min-width: 400px;
+    }
+
+    .dropdown-menu.columns-3 {
         min-width: 600px;
     }
+
     .dropdown-menu li a {
         padding: 5px 15px;
         font-weight: 300;
     }
+
     .multi-column-dropdown {
         list-style: none;
         margin: 0px;
         padding: 0px;
     }
+
     .multi-column-dropdown li a {
         display: block;
         clear: both;
@@ -35,8 +47,9 @@
         color: #333;
         white-space: normal;
     }
+
     .multi-column-dropdown li a:hover {
-        
+        text-decoration: none;
         color: #262626;
         background-color: #999;
     }
@@ -47,7 +60,8 @@
             overflow-x: hidden;
         }
     }
-    li a {
+
+    a {
         text-decoration: none;
     }
 
@@ -77,22 +91,57 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="index.jsp">HOME</a>
+        <a class="navbar-brand" href="#">HOME</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main_nav"
                 aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="main_nav">
             <ul class="navbar-nav">
-                <li class="nav-item "> <a class="nav-link" href="#">Search comic </a> </li
-                <li class="nav-item"><a class="nav-link" href="#"> Upload </a></li>
-                <!-- drop down menu -->
+                
+                <li class="nav-item"><a class="nav-link" href="#"> Search comic </a></li>
+                <li class="nav-item"><a class="nav-link" href="#"> Upload comic </a></li>
                 <li class="nav-item dropdown">
+                    <a class="nav-link  dropdown-toggle" href="#" data-bs-toggle="dropdown"> Genre </a>
+                    <ul class="dropdown-menu multi-column columns-3">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <ul class="multi-column-dropdown">
+                                    <li><a href="#">Something</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+
+                                    <li><a href="#">Sonething else</a></li>
+
+                                    <li><a href="#">Something</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-4">
+                                <ul class="multi-column-dropdown">
+                                    <li><a href="#">Something</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+
+                                    <li><a href="#">Something</a></li>
+
+                                    <li><a href="#">Something else</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-4">
+                                <ul class="multi-column-dropdown">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+
+                                    <li><a href="#">Something</a></li>
+
+                                    <li><a href="#">Something</a></li>
+                                </ul>
+                            </div>
+                        </div>
                     </ul>
                 </li>
             </ul>
 
-        </div> <!-- navbar-collapse.// -->
-    </div> <!-- container-fluid.// -->
+        </div> <!-- container-fluid.// -->
 </nav>
