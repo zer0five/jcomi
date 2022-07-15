@@ -15,7 +15,7 @@ public class Account implements DataTransferObject {
     private String password = "";
     private String displayName = "";
     private String avatar = "";
-    private boolean hidden = false;
+    private boolean banned = false;
     private boolean isAdmin = false;
     private boolean isUploader = false;
 
@@ -30,7 +30,7 @@ public class Account implements DataTransferObject {
         this.password = resultSet.getString("password");
         this.displayName = resultSet.getString("display_name");
         this.avatar = resultSet.getString("avatar");
-        this.hidden = resultSet.getBoolean("hidden");
+        this.banned = resultSet.getBoolean("banned");
         this.isAdmin = resultSet.getBoolean("is_admin");
         this.isUploader = resultSet.getBoolean("is_uploader");
     }
@@ -40,7 +40,7 @@ public class Account implements DataTransferObject {
         account.password = json.get("password").getAsString();
         account.displayName = json.get("displayName").getAsString();
         account.avatar = json.get("avatar").getAsString();
-        account.hidden = json.get("hidden").getAsBoolean();
+        account.banned = json.get("banned").getAsBoolean();
         account.isAdmin = json.get("isAdmin").getAsBoolean();
         account.isUploader = json.get("isUploader").getAsBoolean();
         return account;
@@ -54,7 +54,7 @@ public class Account implements DataTransferObject {
         json.addProperty("email", email);
         json.addProperty("displayName", displayName);
         json.addProperty("avatar", avatar);
-        json.addProperty("hidden", hidden);
+        json.addProperty("banned", banned);
         json.addProperty("isAdmin", isAdmin);
         json.addProperty("isUploader", isUploader);
         return json;

@@ -22,7 +22,7 @@ public class Accounts implements DataAccessObject<Account> {
 
     @Override
     public int insert(Account object) throws SQLException {
-        String sql = "INSERT INTO [Account] (username, password, email, display_name, avatar, hidden, is_admin, is_uploader) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO [Account] (username, password, email, display_name, avatar, banned, is_admin, is_uploader) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         Connection connection = getConnection();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, object.getUsername());
@@ -30,7 +30,7 @@ public class Accounts implements DataAccessObject<Account> {
             statement.setString(3, object.getEmail());
             statement.setString(4, object.getDisplayName());
             statement.setString(5, object.getAvatar());
-            statement.setBoolean(6, object.isHidden());
+            statement.setBoolean(6, object.isBanned());
             statement.setBoolean(7, object.isAdmin());
             statement.setBoolean(8, object.isUploader());
             return statement.executeUpdate();
@@ -39,13 +39,13 @@ public class Accounts implements DataAccessObject<Account> {
 
     @Override
     public int update(Account object) throws SQLException {
-        String sql = "UPDATE [Account] SET password = ?, display_name = ?, avatar = ?, hidden = ?, is_admin = ?, is_uploader = ? WHERE id = ?";
+        String sql = "UPDATE [Account] SET password = ?, display_name = ?, avatar = ?, banned = ?, is_admin = ?, is_uploader = ? WHERE id = ?";
         Connection connection = getConnection();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, object.getPassword());
             statement.setString(2, object.getDisplayName());
             statement.setString(3, object.getAvatar());
-            statement.setBoolean(4, object.isHidden());
+            statement.setBoolean(4, object.isBanned());
             statement.setBoolean(5, object.isAdmin());
             statement.setBoolean(6, object.isUploader());
             statement.setInt(7, object.getId());
