@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comic page</title>
+    <!--! icon -->
+    <link rel="icon" href="/img/icon.png">
+    <!--! boostrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!--! font chữ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400&display=swap" rel="stylesheet">
+    <!--! CSS -->
+    <link rel="stylesheet" href="styleSearchComic.css">
+    <!--! javascript -->
+    <script src="https://kit.fontawesome.com/d565fa5546.js" crossorigin="anonymous"></script>
+    <script>
+        // Get the modal
+        var modal = document.getElementById('id01');
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        const searchButton = document.getElementById('search-button');
+        const searchInput = document.getElementById('search-input');
+        searchButton.addEventListener('click', () => {
+            const inputValue = searchInput.value;
+            alert(inputValue);
+        });
+    </script>
+
+</head>
+<body>
+    <div class="container middel-carousel">
+        <div class="carousel slide" data-bs-ride="carousel" data-bs-interval="1500">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="https://dummyimage.com/550x250/e077e0/f7fafa" class="d-block w-100 img-caeousel"
+                        alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://dummyimage.com/550x250/5faed9/f7fafa" class="d-block w-100 img-caeousel"
+                        alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://dummyimage.com/550x250/d4e88e/f7fafa" class="d-block w-100 img-caeousel"
+                        alt="...">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
