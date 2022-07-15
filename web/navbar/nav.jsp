@@ -65,7 +65,7 @@
 
     /* ============ desktop view .end// ============ */
 </style>
-<nav class="navbar navbar-expand-sm navbar-light bg-light">
+<nav class="navbar navbar-expand-sm navbar-light bg-light" id="top">
     <div class="container">
         <a class="navbar-brand" href="${pageContext.request.contextPath}/">
             <img src="${pageContext.request.contextPath}/assets/logo.svg" alt="logo" style="width: 120px">
