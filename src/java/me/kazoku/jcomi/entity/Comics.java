@@ -44,7 +44,7 @@ public class Comics implements DataAccessObject<Comic> {
 
     @Override
     public int update(Comic object) throws SQLException {
-        String sql = "UPDATE [Comic] SET name = ?, alt_name = ?, author = ?, cover = ?, views = ? WHERE id = ?";
+        String sql = "UPDATE [Comic] SET name = ?, alt_name = ?, author = ?, cover = ?, views = ?, description = ? WHERE id = ?";
         Connection connection = getConnection();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, object.getName());
