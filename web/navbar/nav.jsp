@@ -21,11 +21,9 @@
         min-width: 200px;
     }
 
-    .dropdown-menu.columns-2 {
-        min-width: 400px;
-    }
+   
 
-    .dropdown-menu.columns-3 {
+    .dropdown-menu.columns {
         min-width: 600px;
     }
 
@@ -103,9 +101,9 @@
                 <li class="nav-item"><a class="nav-link" href="#"> Upload comic </a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link  dropdown-toggle" href="#" data-bs-toggle="dropdown"> Genre </a>
-                    <ul class="dropdown-menu multi-column columns-3">
+                    <ul class="dropdown-menu multi-column columns">
                         <div class="row">
-                            <div class="col-sm-4">
+                            <div class="col-4">
                                 <ul class="multi-column-dropdown">
                                     <li><a href="#">Something</a></li>
                                     <li><a href="#">Another action</a></li>
@@ -116,7 +114,7 @@
                                     <li><a href="#">Something</a></li>
                                 </ul>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-4">
                                 <ul class="multi-column-dropdown">
                                     <li><a href="#">Something</a></li>
                                     <li><a href="#">Another action</a></li>
@@ -127,7 +125,7 @@
                                     <li><a href="#">Something else</a></li>
                                 </ul>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-4">
                                 <ul class="multi-column-dropdown">
                                     <li><a href="#">Action</a></li>
                                     <li><a href="#">Another action</a></li>
