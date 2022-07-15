@@ -29,7 +29,7 @@ public class Comics implements DataAccessObject<Comic> {
 
     @Override
     public int insert(Comic object) throws SQLException {
-        String sql = "INSERT INTO [Comic] (name, alt_name, author, cover, views) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO [Comic] (name, alt_name, author, cover, views, description) VALUES (?, ?, ?, ?, ?, ?)";
         Connection connection = getConnection();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, object.getName());
@@ -37,6 +37,7 @@ public class Comics implements DataAccessObject<Comic> {
             statement.setString(3, object.getAuthor());
             statement.setString(4, object.getCover());
             statement.setInt(5, object.getViews());
+            statement.setString(6, object.getDescription());
             return statement.executeUpdate();
         }
     }
@@ -51,6 +52,8 @@ public class Comics implements DataAccessObject<Comic> {
             statement.setString(3, object.getAuthor());
             statement.setString(4, object.getCover());
             statement.setInt(5, object.getViews());
+            statement.setString(6, object.getDescription());
+
             return statement.executeUpdate();
         }
     }
@@ -67,7 +70,8 @@ public class Comics implements DataAccessObject<Comic> {
         statement.setInt(1, id);
         return statement.executeUpdate();
     }
-     private ResultSet queryComic(Object identifier) throws SQLException {
+
+    private ResultSet queryComic(Object identifier) throws SQLException {
         StringBuilder sql = new StringBuilder("SELECT * FROM [Comic]");
         List<Object> where = new ArrayList<>();
         if (identifier instanceof Integer) {
@@ -95,12 +99,13 @@ public class Comics implements DataAccessObject<Comic> {
 
     @Override
     public Optional<Comic> getOne(Object identifier) throws SQLException {
-try (ResultSet resultSet = queryComic(identifier)) {
+        try (ResultSet resultSet = queryComic(identifier)) {
             if (!resultSet.isClosed() && resultSet.next()) {
                 return Optional.of(new Comic(resultSet));
             }
         }
-        return Optional.empty();    }
+        return Optional.empty();
+    }
 
     private Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed()) {
