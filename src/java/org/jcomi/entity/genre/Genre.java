@@ -9,14 +9,13 @@ import java.sql.SQLException;
 @Data
 public class Genre implements DataTransferObject {
     private int id;
-    private int comicId;
-    private int genreId;
-
+    private String genre;
+    private String description;
 
     public Genre() {
         this.id = 0;
-        this.comicId = 0;
-        this.genreId = 0;
+        this.genre = "";
+        this.description = "";
     }
 
     public Genre(ResultSet resultSet) throws SQLException {
@@ -27,8 +26,8 @@ public class Genre implements DataTransferObject {
     @Override
     public void sync(ResultSet resultSet) throws SQLException {
         this.id = resultSet.getInt("ID");
-        this.comicId = resultSet.getInt("Comic_ID");
-        this.genreId = resultSet.getInt("Genre_ID");
+        this.genre = resultSet.getString("Genre");
+        this.description = resultSet.getString("Description");
     }
 
 }

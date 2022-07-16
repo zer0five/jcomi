@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : comic_card
     Created on : Jul 16, 2022, 9:30:38 AM
     Author     : Thai Binh Quoc Viet-CE160378
@@ -15,10 +15,3 @@
             tử conan</a>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-        return new bootstrap.Popover(popoverTriggerEl)
-    })
-</script>

@@ -63,8 +63,8 @@
 
         <!-- Copyright -->
         <div class="text-center text-white p-3  bg-secondary">
-            © 2022 Copyright:
-            <a class="text-white" href="#">Group 5 zerofive</a>
+            © Copyright 2022:
+            <a class="text-white" href="#">zerofive</a>
         </div>
         <!-- Copyright -->
     </footer>

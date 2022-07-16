@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style type="text/css">
     /* ============ desktop view ============ */
     @media all and (min-width: 992px) {
@@ -81,8 +82,13 @@
             </div>
         </div>
         <div class="d-flex mt-3 mt-sm-0">
-            <%--<jsp:include page="user/auth-buttons.jsp"/>--%>
-            <%--<jsp:include page="user/profile_mini.jsp"/>--%>
+            <c:if test="${sessionScope.user !=null}">  
+                <jsp:include page="user/profile_mini.jsp"/>
+            </c:if>
+            <c:if test="${sessionScope.user ==null}">
+                <jsp:include page="user/auth-buttons.jsp"/>
+            </c:if>
+
         </div>
     </div>
 
