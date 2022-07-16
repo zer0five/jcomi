@@ -12,17 +12,23 @@ import org.jcomi.entity.DataTransferObject;
 
 @Data
 public class History implements DataTransferObject {
-    private int id,accountId, chapterId;
-    private long readDate;
 
+    private int id, accountId, chapterId;
+    private long readDate;
+    
     public History() {
-        id=0;
-        accountId = 0 ;
-        chapterId = 0 ;
-        readDate = 0 ; 
+        id = 0;
+        accountId = 0;
+        chapterId = 0;
+        readDate = 0;        
         
     }
-   
+    
+    History(ResultSet resultSet) throws SQLException {
+        this();
+        sync(resultSet);
+        
+    }
     
     @Override
     public void sync(ResultSet resultSet) throws SQLException {
