@@ -10,10 +10,6 @@ import java.sql.SQLException;
 import lombok.Data;
 import org.jcomi.entity.DataTransferObject;
 
-/**
- *
- * @author Thai Binh Quoc Viet-CE160378
- */
 @Data
 public class History implements DataTransferObject {
     private int id,accountId, chapterId;

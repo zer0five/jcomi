@@ -81,7 +81,8 @@
             </div>
         </div>
         <div class="d-flex mt-3 mt-sm-0">
-            <jsp:include page="user/auth-buttons.jsp"/>
+            <%--<jsp:include page="user/auth-buttons.jsp"/>--%>
+            <%--<jsp:include page="user/profile_mini.jsp"/>--%>
         </div>
     </div>
 
