@@ -89,7 +89,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="#">HOME</a>
+        <a class="navbar-brand" href="index.jsp">HOME</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main_nav"
                 aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -97,7 +97,7 @@
         <div class="collapse navbar-collapse" id="main_nav">
             <ul class="navbar-nav">
                 
-                <li class="nav-item"><a class="nav-link" href="#"> Search comic </a></li>
+                <li class="nav-item"><a class="nav-link" href="search_comic.jsp"> Search comic </a></li>
                 <li class="nav-item"><a class="nav-link" href="#"> Upload comic </a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link  dropdown-toggle" href="#" data-bs-toggle="dropdown"> Genre </a>

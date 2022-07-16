@@ -14,7 +14,7 @@
 </style>
 <section class="footer">
     <!-- Footer -->
-    <footer class="mt-auto bg-light ">
+    <footer class="mt-auto bg-light pt-3 ">
         <!-- Grid container -->
         <div class="container-lg p-4">
             <!--Grid row-->

@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comic page</title>
-     <!--! icon -->
+    <!--! icon -->
     <link rel="icon" href="/img/icon.png">
     <!--! boostrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -21,23 +21,13 @@
     <script src="https://kit.fontawesome.com/d565fa5546.js" crossorigin="anonymous"></script>
     <script>
         // Get the modal
-        var modal = document.getElementById('id01');
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
+        const resetBtn = document.querySelectorAll('#reset-btn')
+        resetBtn.addEventListener('click', e => {
+           console.log("click");
 
-        $(document).ready(function (e) {
-            $('.search-panel .dropdown-menu').find('a').click(function (e) {
-                e.preventDefault();
-                var param = $(this).attr("href").replace("#", "");
-                var concept = $(this).text();
-                $('.search-panel span#search_concept').text(concept);
-                $('.input-group #search_param').val(param);
-            });
-        });
+        })
+
+
     </script>
 </head>
 
@@ -228,7 +218,7 @@
                 </div>
                 <div>
                     <div class="form-group text-center">
-                        <a class="btn btn-primary btn-sm m-3 px-3">Reset</a>
+                        <a id="reset-btn" class="btn btn-primary btn-sm m-3 px-3">Reset</a>
                     </div>
                 </div>
 
@@ -285,4 +275,5 @@
             </a>
         </div>
     </section>
+
 </body>
