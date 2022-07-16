@@ -8,14 +8,12 @@ import java.sql.SQLException;
 
 @Data
 public class History implements DataTransferObject {
+
     private int id;
     private int accountId;
     private int chapterId;
     private long readDate;
 
-    private int id, accountId, chapterId;
-    private long readDate;
-    
     public History() {
         this.id = 0;
         this.accountId = 0;
