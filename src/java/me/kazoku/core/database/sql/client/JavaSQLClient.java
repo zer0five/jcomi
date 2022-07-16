@@ -1,9 +1,9 @@
 package me.kazoku.core.database.sql.client;
 
-import java.lang.reflect.InvocationTargetException;
 import me.kazoku.core.database.sql.SQLDriver;
 import me.kazoku.core.database.sql.SQLSettings;
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -40,7 +40,8 @@ public class JavaSQLClient extends BaseSQLClient<Properties> {
         try {
             Driver driver = this.driver.getDriverClass().getConstructor().newInstance();
             return driver.connect(this.driver.createUrl(settings), properties);
-        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException |
+                 IllegalArgumentException | InvocationTargetException ex) {
             Logger.getLogger(JavaSQLClient.class.getName()).log(Level.WARNING, "Cannot get connection from driver class", ex);
         }
         return DriverManager.getConnection(this.driver.createUrl(settings), properties);

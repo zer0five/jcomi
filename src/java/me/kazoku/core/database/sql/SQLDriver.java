@@ -23,7 +23,7 @@ public interface SQLDriver {
         builder.append(':');
         builder.append(settings.getPort());
         settings.getDatabase()
-                .ifPresent(database -> settings.setDriverProperty("databaseName", database));
+            .ifPresent(database -> settings.setDriverProperty("databaseName", database));
         builder.append(settings.getDriverPropertiesString(";", ";"));
         return builder.toString();
     }
