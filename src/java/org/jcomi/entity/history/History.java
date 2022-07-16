@@ -1,36 +1,35 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.jcomi.entity.history;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import lombok.Data;
 import org.jcomi.entity.DataTransferObject;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 @Data
 public class History implements DataTransferObject {
-    private int id,accountId, chapterId;
+    private int id;
+    private int accountId;
+    private int chapterId;
     private long readDate;
 
     public History() {
-        id=0;
-        accountId = 0 ;
-        chapterId = 0 ;
-        readDate = 0 ; 
-        
+        this.id = 0;
+        this.accountId = 0;
+        this.chapterId = 0;
+        this.readDate = System.currentTimeMillis();
     }
-   
-    
+
+    public History(ResultSet resultSet) throws SQLException {
+        this();
+        this.sync(resultSet);
+    }
+
     @Override
     public void sync(ResultSet resultSet) throws SQLException {
-        id = resultSet.getInt("ID");
-        accountId = resultSet.getInt("Account_ID");
-        chapterId = resultSet.getInt("Chapter_ID");
-        readDate = resultSet.getLong("Read_Date");
-        
+        this.id = resultSet.getInt("ID");
+        this.accountId = resultSet.getInt("Account_ID");
+        this.chapterId = resultSet.getInt("Chapter_ID");
+        this.readDate = resultSet.getLong("Read_Date");
     }
-    
 }
