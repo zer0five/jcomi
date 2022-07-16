@@ -21,7 +21,7 @@
         min-width: 200px;
     }
 
-   
+
 
     .dropdown-menu.columns {
         min-width: 600px;
@@ -96,7 +96,7 @@
         </button>
         <div class="collapse navbar-collapse" id="main_nav">
             <ul class="navbar-nav">
-                
+
                 <li class="nav-item"><a class="nav-link" href="search_comic.jsp"> Search comic </a></li>
                 <li class="nav-item"><a class="nav-link" href="#"> Upload comic </a></li>
                 <li class="nav-item dropdown">

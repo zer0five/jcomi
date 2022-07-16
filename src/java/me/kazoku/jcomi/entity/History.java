@@ -30,6 +30,7 @@ public class History implements DataTransferObject {
         this.ReadDate = resultSet.getLong("Read_Date");
 
     }
+
     public static History fromJson(JsonObject json) {
         History history = new History(json.get("id").getAsInt());
         history.ChapterId = json.get("ChapterId").getAsInt();
@@ -46,6 +47,6 @@ public class History implements DataTransferObject {
         json.addProperty("AccoutId", AccountId);
         json.addProperty("ReadDate", ReadDate);
         return json;
-    }    
+    }
 
 }

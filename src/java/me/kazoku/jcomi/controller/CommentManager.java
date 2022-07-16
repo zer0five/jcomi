@@ -22,7 +22,7 @@ import me.kazoku.jcomi.entity.Comments;
 public class CommentManager extends HttpServlet {
 
     private static JavaSQLClient client;
-    private static Comments comments; 
+    private static Comments comments;
 
     @Override
     public void init() {
@@ -41,7 +41,7 @@ public class CommentManager extends HttpServlet {
                     break;
             }
         }
-        try ( PrintWriter writer = response.getWriter()) {
+        try (PrintWriter writer = response.getWriter()) {
             JsonObject json = new JsonObject();
             Optional<Integer> id = Optional.ofNullable(request.getParameter("id")).map(Integer::parseInt);
             if (id.isPresent()) {
@@ -91,7 +91,7 @@ public class CommentManager extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
-        try ( PrintWriter writer = response.getWriter()) {
+        try (PrintWriter writer = response.getWriter()) {
             JsonObject json = new JsonObject();
             Optional<Integer> id = Optional.ofNullable(request.getParameter("id")).map(Integer::parseInt);
             if (id.isPresent()) {

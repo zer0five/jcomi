@@ -37,10 +37,10 @@
 
                     <ul class="list-unstyled mb-0 ">
                         <li>
-                            <a href="#top">Up to top</a>
+                            <a href="">Profile</a>
                         </li>
                         <li>
-                            <a href="#">Search comic</a>
+                            <a href="search_comic.jsp">Search comic</a>
                         </li>
                         <li>
                             <a href="#">Upload comic</a>

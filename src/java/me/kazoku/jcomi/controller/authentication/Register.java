@@ -50,9 +50,9 @@ public class Register extends HttpServlet {
                         json.addProperty("message", "Account existed");
                     } else {
                         String hash = MD5.getMd5(password.get());
-                        Account newAccount = new Account(0, username.get(),email.get());
+                        Account newAccount = new Account(0, username.get(), email.get());
                         newAccount.setPassword(hash);
-                        Optional.ofNullable(request.getParameter("display-name")).ifPresent(newAccount::setDisplayName);      
+                        Optional.ofNullable(request.getParameter("display-name")).ifPresent(newAccount::setDisplayName);
                         accounts.insert(newAccount);
                         json.addProperty("status", "success");
                         json.addProperty("message", "Register succesfully");

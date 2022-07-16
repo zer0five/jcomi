@@ -15,7 +15,6 @@ public class Accounts implements DataAccessObject<Account> {
     private JavaSQLClient client;
     private Connection connection;
 
-
     public Accounts(JavaSQLClient client) {
         this.client = client;
     }

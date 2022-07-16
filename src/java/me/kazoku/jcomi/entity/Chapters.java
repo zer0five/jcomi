@@ -15,7 +15,6 @@ public class Chapters implements DataAccessObject<Chapter> {
     private JavaSQLClient client;
     private Connection connection;
 
-
     public Chapters(JavaSQLClient client) {
         this.client = client;
     }
@@ -35,7 +34,7 @@ public class Chapters implements DataAccessObject<Chapter> {
     @Override
     public int update(Chapter object) throws SQLException {
         String sql = "UPDATE [Chapter] SET chapter_id = ?, ordinal = ?, image_url = ? WHERE id = ?";
-         Connection connection = getConnection();
+        Connection connection = getConnection();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, object.getChapterID());
             statement.setInt(2, object.getOrdinal());
@@ -81,7 +80,7 @@ public class Chapters implements DataAccessObject<Chapter> {
         List<Chapter> chapters = new ArrayList<>();
         try (ResultSet resultSet = queryChapter(identifier)) {
             while (!resultSet.isClosed() && resultSet.next()) {
-               chapters.add(new Chapter(resultSet));
+                chapters.add(new Chapter(resultSet));
             }
         }
         return chapters;

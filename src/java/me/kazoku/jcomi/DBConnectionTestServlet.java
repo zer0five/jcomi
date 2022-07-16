@@ -30,7 +30,7 @@ public class DBConnectionTestServlet extends HttpServlet {
         int retry = 0;
         Optional<SQLException> ex = Optional.empty();
         while (retry++ < 10) {
-            try ( Connection ignored = client.getConnection()) {
+            try (Connection ignored = client.getConnection()) {
                 writer.write("{\"status\": \"success\", \"message\": \"Connection successful (retries: " + retry + ")\"}");
                 return;
             } catch (SQLException e) {
@@ -43,7 +43,7 @@ public class DBConnectionTestServlet extends HttpServlet {
 
     private void doRequest(@SuppressWarnings("unused") HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("application/json");
-        try ( PrintWriter writer = response.getWriter()) {
+        try (PrintWriter writer = response.getWriter()) {
             testDatabaseConnection(writer);
         } catch (IOException e) {
             Logger.getLogger(DBConnectionTestServlet.class.getName()).severe(e.getMessage());

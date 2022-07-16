@@ -9,12 +9,13 @@ import java.util.Properties;
  * @author Kazoku
  * @version 1.0
  * <p>
- * This class is used to define the settings that will
- * be used to connect to the database.
+ * This class is used to define the settings that will be used to connect to the
+ * database.
  * @since 2022-07-01
  */
 @Getter
 public class SQLSettings {
+
     private final Properties clientProperties;
     private final Properties driverProperties;
     private String host;

@@ -41,7 +41,7 @@ public class ComicManager extends HttpServlet {
                     break;
             }
         }
-        try ( PrintWriter writer = response.getWriter()) {
+        try (PrintWriter writer = response.getWriter()) {
             JsonObject json = new JsonObject();
             Optional<Integer> id = Optional.ofNullable(request.getParameter("id")).map(Integer::parseInt);
             if (id.isPresent()) {
@@ -91,7 +91,7 @@ public class ComicManager extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
-        try ( PrintWriter writer = response.getWriter()) {
+        try (PrintWriter writer = response.getWriter()) {
             JsonObject json = new JsonObject();
             Optional<Integer> id = Optional.ofNullable(request.getParameter("id")).map(Integer::parseInt);
             if (id.isPresent()) {

@@ -32,6 +32,7 @@ public class Comment implements DataTransferObject {
         this.PostedDate = resultSet.getLong("Posted_Date");
 
     }
+
     public static Comment fromJson(JsonObject json) {
         Comment comment = new Comment(json.get("id").getAsInt());
         comment.ComicId = json.get("ComicId").getAsInt();
@@ -50,6 +51,6 @@ public class Comment implements DataTransferObject {
         json.addProperty("Content", Content);
         json.addProperty("PostedDate", PostedDate);
         return json;
-    }    
+    }
 
 }

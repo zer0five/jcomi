@@ -13,10 +13,10 @@ public class Chapter implements DataTransferObject {
     private int chapterID;
     private int ordinal;
     private String imageUrl = "";
-   
+
     public Chapter(int id) {
         this.id = id;
-       
+
     }
 
     public Chapter(ResultSet resultSet) throws SQLException {
