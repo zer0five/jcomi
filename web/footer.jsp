@@ -37,7 +37,7 @@
 
                     <ul class="list-unstyled mb-0 ">
                         <li>
-                            <a href="">Profile</a>
+                            <a href="profile_info.jsp">Profile</a>
                         </li>
                         <li>
                             <a href="search_comic.jsp">Search comic</a>
