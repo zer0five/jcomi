@@ -19,13 +19,13 @@
     </head>
     <body class="bg-white">
         <jsp:include page="/navbar/nav.jsp"/>
-        <div class="container">
+        <div class="container pt-2 pb-3">
             <div class="row mt-3">
                 <div class="col-10 mx-auto border-start border-4 border-danger ps-3 text-danger">
                     <h2>Add chapter</h2>
                 </div>
             </div>
-            <div class="row mt-4">
+            <div class="row mt-3">
                 <form id="create-comic-form" method="post" class="col-10 rounded rounded-3 shadow p-5 bg-light mx-auto">
                     <div id="preview" class="mb-3 text-center" style="height: 300px; width:auto; border: 3px dashed #747474;">
                     </div>
@@ -57,13 +57,15 @@
                 </form>
             </div>
         </div>
+        <jsp:include page="/footer.jsp"/>
+        <jsp:include page="/script.jsp"/>
         <script src="${pageContext.request.contextPath}/js/sortable.min.js"></script>
         <script>
             let input = document.getElementById('images');
             let preview = document.getElementById("preview");
             new Sortable(preview, {
                 animation: 150,
-                ghostClass: 'bg-primary'
+                ghostClass: 'opacity-25'
             });
             input.onchange = function () {
                 preview.innerHTML = '';
@@ -144,7 +146,5 @@
             }
 
         </script>
-    </div>
-    <jsp:include page="/script.jsp"/>
-</body>
+    </body>
 </html>
