@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 
 @WebServlet(name = "Login", value = "/authentication/login")
 public class Login extends ControllerServlet {
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -41,7 +42,12 @@ public class Login extends ControllerServlet {
                 if (Objects.equals(hash, account.get().getPassword())) {
                     session.setAttribute("user", account.get());
                     Logger.getLogger(Login.class.getName()).log(Level.INFO, String.format("Logged in account: %s [%d]; JCOMI_SESSION=%s", account.get().getUsername(), account.get().getId(), session.getId()));
-                    response.sendRedirect(request.getContextPath()); // redirect to home page
+                    Optional<String> callback = Optional.ofNullable(request.getParameter("id")).filter(s -> !s.isEmpty());
+                    if (callback.isPresent()) {
+                        response.sendRedirect(callback.get());
+                    } else {
+                        response.sendRedirect(request.getContextPath()); // redirect to home page
+                    }
                 } else {
                     response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
                 }
