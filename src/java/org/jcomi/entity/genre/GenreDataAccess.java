@@ -1,9 +1,6 @@
 package org.jcomi.entity.genre;
 
-import me.kazoku.core.database.sql.client.JavaSQLClient;
 import org.jcomi.entity.DataAccessObject;
-import org.jcomi.entity.account.Account;
-import org.jcomi.util.DatabaseUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,20 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GenreDataAccess extends DataAccessObject<Genre> {
-
-    private static GenreDataAccess instance;
-
-    public static GenreDataAccess getInstance() {
-        if (instance == null) {
-            instance = new GenreDataAccess(DatabaseUtil.createClient());
-        }
-        return instance;
+    public GenreDataAccess() {
+        super();
     }
-
-    private GenreDataAccess(JavaSQLClient client) {
-        super(client);
-    }
-
     @Override
     protected Genre createObject(ResultSet resultSet) throws SQLException {
         return new Genre(resultSet);
@@ -32,7 +18,7 @@ public class GenreDataAccess extends DataAccessObject<Genre> {
 
     @Override
     public int insert(Genre object) throws SQLException {
-        return update(
+        return sqlUpdate(
             "INSERT INTO [Genre] " +
                 "([Genre], [Description]) " +
                 "VALUES (?, ?)",
@@ -43,7 +29,7 @@ public class GenreDataAccess extends DataAccessObject<Genre> {
 
     @Override
     public Object insertAndGetIdentifier(Genre object) throws SQLException {
-        try (ResultSet resultSet = query(
+        try (ResultSet resultSet = sqlQuery(
             "INSERT INTO [Genre] " +
                 "([Genre], [Description]) " +
                 "OUTPUT INSERTED.ID " +
@@ -63,7 +49,7 @@ public class GenreDataAccess extends DataAccessObject<Genre> {
 
     @Override
     public int update(Genre object) throws SQLException {
-        return update(
+        return sqlUpdate(
             "UPDATE [Genre] " +
                 "SET [Genre] = ?, [Description] = ? " +
                 "WHERE [ID] = ?",
@@ -74,7 +60,7 @@ public class GenreDataAccess extends DataAccessObject<Genre> {
 
     @Override
     public int delete(Genre object) throws SQLException {
-        return update(
+        return sqlUpdate(
             "DELETE FROM [Genre] " +
                 "WHERE [ID] = ?",
             object.getId()
@@ -83,7 +69,7 @@ public class GenreDataAccess extends DataAccessObject<Genre> {
 
     @Override
     public int delete(Object identifier) throws SQLException {
-        return update(
+        return sqlUpdate(
             "DELETE FROM [Genre] " +
                 "WHERE [ID] = ?",
             identifier
@@ -91,8 +77,8 @@ public class GenreDataAccess extends DataAccessObject<Genre> {
     }
 
     @Override
-    protected ResultSet query(Object identifier) throws SQLException {
-        return query(
+    protected ResultSet selectById(Object identifier) throws SQLException {
+        return sqlQuery(
             "SELECT * FROM [Genre] " +
                 "WHERE [ID] = ?",
             identifier
@@ -102,7 +88,7 @@ public class GenreDataAccess extends DataAccessObject<Genre> {
     @Override
     public List<Genre> get(Object identifier) throws SQLException {
         List<Genre> genres = new ArrayList<>();
-        try (ResultSet resultSet = query(identifier)) {
+        try (ResultSet resultSet = selectById(identifier)) {
             while (resultSet.next()) {
                 genres.add(new Genre(resultSet));
             }
@@ -112,7 +98,7 @@ public class GenreDataAccess extends DataAccessObject<Genre> {
 
     public List<Genre> getAll() throws SQLException {
         List<Genre> genres = new ArrayList<>();
-        try (ResultSet resultSet = query("SELECT * FROM [Genre]")) {
+        try (ResultSet resultSet = sqlQuery("SELECT [ID], [Genre], [Description] FROM [Genre] ORDER BY [Genre]", new Object[0])) {
             while (resultSet.next()) {
                 genres.add(new Genre(resultSet));
             }

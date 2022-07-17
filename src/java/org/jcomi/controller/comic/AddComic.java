@@ -4,6 +4,10 @@ import org.jcomi.controller.ControllerServlet;
 import org.jcomi.entity.account.Account;
 import org.jcomi.entity.comic.Comic;
 import org.jcomi.entity.comic.ComicDataAccess;
+import org.jcomi.entity.comic.genre.ComicGenre;
+import org.jcomi.entity.comic.genre.ComicGenreDataAccess;
+import org.jcomi.entity.genre.Genre;
+import org.jcomi.entity.genre.GenreDataAccess;
 
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebInitParam;
@@ -20,11 +24,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @WebServlet(name = "AddComic", value = "/comic/add",
-    initParams = {
-        @WebInitParam(name = "uploadPath", value = "/uploads/comic")
-    }
+        initParams = {
+            @WebInitParam(name = "uploadPath", value = "/uploads/comic")
+        }
 )
-@MultipartConfig(maxFileSize = 1024 * 1024 * 10, maxRequestSize = 1024 * 1024 * 50) // 10MB, 50MB
+@MultipartConfig
 public class AddComic extends ControllerServlet {
 
     private String uploadCover(Part coverImage, Comic comic) {
@@ -34,6 +38,7 @@ public class AddComic extends ControllerServlet {
             Files.createDirectories(realPath); // create directory if not exists
             String fileName = "cover.webp"; // coverImage.getSubmittedFileName();
             Path filePath = Paths.get(realPath.toString(), fileName); // realPath + fileName
+            Files.deleteIfExists(filePath); // delete old cover image if exists
             Files.copy(coverImage.getInputStream(), filePath); // upload file
             return Paths.get(virtualPath.toString(), fileName).toString(); // virtualPath + fileName
         } catch (IOException e) {
@@ -43,15 +48,19 @@ public class AddComic extends ControllerServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-        Logger.getLogger("AddComic").info("Upload path: " + getServletContext().getRealPath(getServletConfig().getInitParameter("uploadPath")));
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            request.getRequestDispatcher("/comic/add.jsp").forward(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(AddComic.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         try {
             Optional<Object> rawAccount = Optional.ofNullable(request.getSession(false))
-                .map(session -> session.getAttribute("user"));
+                    .map(session -> session.getAttribute("user"));
             if (!rawAccount.isPresent()) {
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
                 return;
@@ -61,13 +70,21 @@ public class AddComic extends ControllerServlet {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN);
                 return;
             }
+            if (request.getParameterMap().isEmpty()) {
+                Logger.getGlobal().warning("Empty!!");
+            }
+            request.getParameterMap().forEach((key, value) -> {
+                for (String v : value) {
+                    Logger.getGlobal().info(key + ": " + v);
+                }
+            });
             Optional<String> name = Optional.ofNullable(request.getParameter("name")).filter(s -> !s.isEmpty());
             Optional<String> description = Optional.ofNullable(request.getParameter("description")).filter(s -> !s.isEmpty());
             Optional<String> author = Optional.ofNullable(request.getParameter("author")).filter(s -> !s.isEmpty());
             Optional<String> altName = Optional.ofNullable(request.getParameter("alt-name")).filter(s -> !s.isEmpty());
             Optional<Part> cover = Optional.ofNullable(request.getPart("cover-image"));
             if (!name.isPresent()) {
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                 return;
             }
             Comic comic = new Comic();
@@ -76,12 +93,27 @@ public class AddComic extends ControllerServlet {
             author.ifPresent(comic::setAuthor);
             altName.ifPresent(comic::setAltName);
             comic.setUploaderId(account.getId());
-            ComicDataAccess.getInstance().insertAndGetIdentifier(comic);
             if (cover.isPresent()) {
-                comic.setCover(uploadCover(cover.get(), comic));
-                ComicDataAccess.getInstance().update(comic);
+                String url = uploadCover(cover.get(), comic);
+                comic.setCover(url);
             }
-            response.sendRedirect(request.getContextPath() + "/comic/info" + "?id=" + comic.getId());
+            ComicDataAccess dataAccess = new ComicDataAccess();
+            comic.setId((int) dataAccess.insertAndGetIdentifier(comic));
+            Optional<String[]> genres = Optional.ofNullable(request.getParameterValues("genres")).filter(s -> s.length > 0);
+
+            GenreDataAccess genreDataAccess = new GenreDataAccess();
+            ComicGenreDataAccess comicGenreDataAccess = new ComicGenreDataAccess();
+            if (genres.isPresent()) {
+                for (String genre : genres.get()) {
+                    Optional<Genre> genreEntity = genreDataAccess.getOne(genre);
+                    if (genreEntity.isPresent()) {
+                        ComicGenre comicGenre = new ComicGenre(comic, genreEntity.get());
+                        comicGenreDataAccess.insert(comicGenre);
+                    }
+                }
+            }
+            response.getWriter().print("{\"status\": \"success\", \"id\": " + comic.getId() + "}");
+//            response.sendRedirect(request.getContextPath() + "/comic/information" + "?id=" + comic.getId());
         } catch (Exception e) {
             Logger.getLogger(AddComic.class.getName()).log(Level.SEVERE, "Error while adding comic", e);
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

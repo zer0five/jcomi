@@ -1,8 +1,6 @@
 package org.jcomi.entity.account;
 
-import me.kazoku.core.database.sql.client.JavaSQLClient;
 import org.jcomi.entity.DataAccessObject;
-import org.jcomi.util.DatabaseUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,17 +10,8 @@ import java.util.Optional;
 
 public class AccountDataAccess extends DataAccessObject<Account> {
 
-    private static AccountDataAccess instance;
-
-    private AccountDataAccess(JavaSQLClient client) {
-        super(client);
-    }
-
-    public static AccountDataAccess getInstance() {
-        if (instance == null) {
-            instance = new AccountDataAccess(DatabaseUtil.createClient());
-        }
-        return instance;
+    public AccountDataAccess() {
+        super();
     }
 
     @Override
@@ -32,10 +21,10 @@ public class AccountDataAccess extends DataAccessObject<Account> {
 
     @Override
     public int insert(Account object) throws SQLException {
-        return update(
+        return sqlUpdate(
             "INSERT INTO [Account] " +
                 "([Username], [Password], [Email], [Display_Name], [Banned], [Is_Admin], [Is_Uploader]) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
             object.getUsername(),
             object.getPassword(),
             object.getEmail(),
@@ -48,11 +37,11 @@ public class AccountDataAccess extends DataAccessObject<Account> {
 
     @Override
     public Object insertAndGetIdentifier(Account object) throws SQLException {
-        ResultSet resultSet = query(
+        ResultSet resultSet = sqlQuery(
             "INSERT INTO [Account] " +
                 "([Username], [Password], [Email], [Display_Name], [Banned], [Is_Admin], [Is_Uploader]) " +
                 "OUTPUT inserted.ID " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?)",
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
             object.getUsername(), object.getPassword(), object.getEmail(),
             object.getDisplayName(), object.isBanned(), object.isAdmin(),
             object.isUploader()
@@ -68,7 +57,7 @@ public class AccountDataAccess extends DataAccessObject<Account> {
 
     @Override
     public int update(Account object) throws SQLException {
-        int result = update(
+        int result = sqlUpdate(
             "UPDATE [Account] " +
                 "SET " +
                 "[Username] = ?, [Password] = ?, [Email] = ?, [Display_Name] = ?, " +
@@ -79,7 +68,7 @@ public class AccountDataAccess extends DataAccessObject<Account> {
             object.getId()
         );
         if (result != 0) {
-            ResultSet newData = query(object.getId());
+            ResultSet newData = selectById(object.getId());
             if (newData.next()) {
                 object.sync(newData);
             } else {
@@ -97,13 +86,13 @@ public class AccountDataAccess extends DataAccessObject<Account> {
     @Override
     public int delete(Object identifier) throws SQLException {
         if (identifier instanceof Integer) {
-            return update("DELETE FROM [Account] WHERE [ID] = ?", (Integer) identifier);
+            return sqlUpdate("DELETE FROM [Account] WHERE [ID] = ?", (Integer) identifier);
         } else {
             throw new IllegalArgumentException("Identifier must be an integer");
         }
     }
 
-    public ResultSet query(Object identifier) throws SQLException {
+    public ResultSet selectById(Object identifier) throws SQLException {
         StringBuilder sql = new StringBuilder("SELECT * FROM [Account]");
         List<Object> where = new ArrayList<>();
         if (identifier instanceof Integer) {
@@ -114,13 +103,13 @@ public class AccountDataAccess extends DataAccessObject<Account> {
             where.add(identifier);
             where.add(identifier);
         }
-        return query(sql.toString(), where.toArray());
+        return sqlQuery(sql.toString(), where.toArray());
     }
 
     @Override
     public List<Account> get(Object identifier) throws SQLException {
         List<Account> accounts = new ArrayList<>();
-        try (ResultSet resultSet = query(identifier)) {
+        try (ResultSet resultSet = selectById(identifier)) {
             while (resultSet.next()) {
                 accounts.add(new Account(resultSet));
             }
@@ -130,7 +119,7 @@ public class AccountDataAccess extends DataAccessObject<Account> {
 
     @Override
     public Optional<Account> getOne(Object identifier) throws SQLException {
-        try (ResultSet resultSet = query(identifier)) {
+        try (ResultSet resultSet = selectById(identifier)) {
             if (resultSet.next()) {
                 return Optional.of(new Account(resultSet));
             }

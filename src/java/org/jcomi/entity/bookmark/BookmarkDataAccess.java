@@ -1,8 +1,6 @@
 package org.jcomi.entity.bookmark;
 
-import me.kazoku.core.database.sql.client.JavaSQLClient;
 import org.jcomi.entity.DataAccessObject;
-import org.jcomi.util.DatabaseUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,17 +10,8 @@ import java.util.Optional;
 
 public class BookmarkDataAccess extends DataAccessObject<Bookmark> {
 
-    private static BookmarkDataAccess instance;
-
-    private BookmarkDataAccess(JavaSQLClient client) {
-        super(client);
-    }
-
-    public static BookmarkDataAccess getInstance() {
-        if (instance == null) {
-            instance = new BookmarkDataAccess(DatabaseUtil.createClient());
-        }
-        return instance;
+    public BookmarkDataAccess() {
+        super();
     }
 
     @Override
@@ -32,7 +21,7 @@ public class BookmarkDataAccess extends DataAccessObject<Bookmark> {
 
     @Override
     public int insert(Bookmark object) throws SQLException {
-        return update(
+        return sqlUpdate(
             "INSERT INTO [Bookmark] " +
                 "([Account_ID], [Comic_ID]) " +
                 "VALUES (?, ?)",
@@ -43,7 +32,7 @@ public class BookmarkDataAccess extends DataAccessObject<Bookmark> {
 
     @Override
     public Object insertAndGetIdentifier(Bookmark object) throws SQLException {
-        try (ResultSet resultSet = query(
+        try (ResultSet resultSet = sqlQuery(
             "INSERT INTO [Comic] " +
                 "([Account_ID], [Comic_ID]) " +
                 "OUTPUT INSERTED.ID " +
@@ -63,14 +52,14 @@ public class BookmarkDataAccess extends DataAccessObject<Bookmark> {
 
     @Override
     public int update(Bookmark object) throws SQLException {
-        int result = update(
+        int result = sqlUpdate(
             "UPDATE [Bookmark] SET [Account_ID] = ?, [Comic_ID] = ? WHERE [ID] = ?",
             object.getAccountId(),
             object.getComicId(),
             object.getId()
         );
         if (result != 0) {
-            object.sync(query(object.getId()));
+            object.sync(selectById(object.getId()));
         }
         return result;
     }
@@ -83,21 +72,21 @@ public class BookmarkDataAccess extends DataAccessObject<Bookmark> {
     @Override
     public int delete(Object identifier) throws SQLException {
         if (identifier instanceof Integer) {
-            return update("DELETE FROM [Bookmark] WHERE [ID] = ?", identifier);
+            return sqlUpdate("DELETE FROM [Bookmark] WHERE [ID] = ?", identifier);
         } else {
             throw new IllegalArgumentException("Identifier must be an Integer");
         }
     }
 
     @Override
-    protected ResultSet query(Object identifier) throws SQLException {
-        return query("SELECT * FROM [Bookmark] WHERE [ID] = ?", identifier);
+    protected ResultSet selectById(Object identifier) throws SQLException {
+        return sqlQuery("SELECT * FROM [Bookmark] WHERE [ID] = ?", identifier);
     }
 
     @Override
     public List<Bookmark> get(Object identifier) throws SQLException {
         List<Bookmark> bookmarks = new ArrayList<>();
-        try (ResultSet resultSet = query("SELECT * FROM [Bookmark] WHERE [Account_ID] = ?", identifier)) {
+        try (ResultSet resultSet = sqlQuery("SELECT * FROM [Bookmark] WHERE [Account_ID] = ?", identifier)) {
             while (!resultSet.isClosed() && resultSet.next()) {
                 bookmarks.add(new Bookmark(resultSet));
             }
@@ -107,7 +96,7 @@ public class BookmarkDataAccess extends DataAccessObject<Bookmark> {
 
     @Override
     public Optional<Bookmark> getOne(Object identifier) throws SQLException {
-        try (ResultSet resultSet = query(identifier)) {
+        try (ResultSet resultSet = selectById(identifier)) {
             if (!resultSet.isClosed() && resultSet.next()) {
                 return Optional.of(new Bookmark(resultSet));
             }

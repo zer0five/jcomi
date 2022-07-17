@@ -7,22 +7,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Data
-public class Chapter implements DataTransferObject {
-    private int id;
-    private int comicId;
-    private int chapterId;
-    private String title;
-    private int ordinal;
+public class Page implements DataTransferObject {
 
-    public Chapter() {
+    private int id;
+    private int chapterId;
+    private int ordinal;
+    private String imageUrl;
+
+    public Page() {
         this.id = 0;
-        this.comicId = 0;
         this.chapterId = 0;
-        this.title = "";
         this.ordinal = 0;
+        this.imageUrl = "";
     }
 
-    public Chapter(ResultSet resultSet) throws SQLException {
+    public Page(ResultSet resultSet) throws SQLException {
         this();
         this.sync(resultSet);
     }
@@ -30,9 +29,8 @@ public class Chapter implements DataTransferObject {
     @Override
     public void sync(ResultSet resultSet) throws SQLException {
         this.id = resultSet.getInt("ID");
-        this.comicId = resultSet.getInt("Comic_ID");
         this.chapterId = resultSet.getInt("Chapter_ID");
-        this.title = resultSet.getString("Title");
         this.ordinal = resultSet.getInt("Ordinal");
+        this.imageUrl = resultSet.getString("Image_URL");
     }
 }

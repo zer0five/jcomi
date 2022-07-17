@@ -34,7 +34,8 @@ public class Login extends ControllerServlet {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST);
                 return;
             }
-            Optional<Account> account = AccountDataAccess.getInstance().getOne(username.get());
+            AccountDataAccess dataAccess = new AccountDataAccess();
+            Optional<Account> account = dataAccess.getOne(username.get());
             if (account.isPresent()) {
                 String hash = MD5Util.md5(password.get());
                 if (Objects.equals(hash, account.get().getPassword())) {

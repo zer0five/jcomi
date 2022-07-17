@@ -1,6 +1,7 @@
 package org.jcomi.entity;
 
 import me.kazoku.core.database.sql.client.JavaSQLClient;
+import org.jcomi.util.DatabaseUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,6 +18,10 @@ public abstract class DataAccessObject<T extends DataTransferObject> {
 
     protected DataAccessObject(JavaSQLClient client) {
         this.client = client;
+    }
+
+    protected DataAccessObject() {
+        this(DatabaseUtil.createClient());
     }
 
     protected Connection getConnection() throws SQLException {
@@ -80,7 +85,7 @@ public abstract class DataAccessObject<T extends DataTransferObject> {
      * @return The result set.
      * @throws SQLException
      */
-    protected abstract ResultSet query(Object identifier) throws SQLException;
+    protected abstract ResultSet selectById(Object identifier) throws SQLException;
 
     /**
      * Get a list of object from the database.
@@ -90,7 +95,7 @@ public abstract class DataAccessObject<T extends DataTransferObject> {
      * @throws SQLException
      */
     public List<T> get(Object identifier) throws SQLException {
-        ResultSet resultSet = query(identifier);
+        ResultSet resultSet = selectById(identifier);
         List<T> list = new ArrayList<>();
         while (resultSet.next()) {
             list.add(createObject(resultSet));
@@ -106,7 +111,7 @@ public abstract class DataAccessObject<T extends DataTransferObject> {
      * @throws SQLException
      */
     public Optional<T> getOne(Object identifier) throws SQLException {
-        ResultSet resultSet = query(identifier);
+        ResultSet resultSet = selectById(identifier);
         if (resultSet.next()) {
             return Optional.of(createObject(resultSet));
         }
@@ -121,7 +126,7 @@ public abstract class DataAccessObject<T extends DataTransferObject> {
      * @return Number of rows affected.
      * @throws SQLException
      */
-    protected int update(String sql, Object... parameters) throws SQLException {
+    protected int sqlUpdate(String sql, Object... parameters) throws SQLException {
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             for (int i = 0; i < parameters.length; i++) {
                 statement.setObject(i + 1, parameters[i]);
@@ -138,7 +143,7 @@ public abstract class DataAccessObject<T extends DataTransferObject> {
      * @return The result set.
      * @throws SQLException
      */
-    protected ResultSet query(String sql, Object... parameters) throws SQLException {
+    protected ResultSet sqlQuery(String sql, Object... parameters) throws SQLException {
         PreparedStatement statement = getConnection().prepareStatement(sql);
         for (int i = 0; i < parameters.length; i++) {
             statement.setObject(i + 1, parameters[i]);

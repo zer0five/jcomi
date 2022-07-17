@@ -1,9 +1,10 @@
-<%-- 
+<%--
     Document   : footer
     Created on : Jul 15, 2022, 3:39:57 PM
     Author     : Thai Binh Quoc Viet-CE160378
 --%>
 
+<%@page import="java.util.Calendar"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 
@@ -43,7 +44,7 @@
                             <a href="search_comic.jsp">Search comic</a>
                         </li>
                         <li>
-                            <a href="#">Upload comic</a>
+                            <a href="${pageContext.request.contextPath}/comic/add">Add comic</a>
                         </li>
 
                     </ul>
@@ -53,7 +54,7 @@
                 <!--Grid column-->
                 <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
                     <h5 class="text-uppercase">Contact Us</h5>
-                    <p><i class="fa fa-envelope-o mr-3"></i> zerofive@gmail.com</p>
+                    <a href="mailto:zerofive@gmail.com"><i class="fa fa-envelope-o mr-3"></i> zerofive@gmail.com</a>
                 </div>
                 <!--Grid column-->
             </div>
@@ -63,8 +64,8 @@
 
         <!-- Copyright -->
         <div class="text-center text-white p-3  bg-secondary">
-            © Copyright 2022:
-            <a class="text-white" href="#">zerofive</a>
+            Copyright © <%=Calendar.getInstance().get(Calendar.YEAR)%>
+            <a class="text-white" href="#">ZeroFive</a>
         </div>
         <!-- Copyright -->
     </footer>

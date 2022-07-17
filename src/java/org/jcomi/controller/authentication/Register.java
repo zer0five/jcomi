@@ -38,8 +38,9 @@ public class Register extends ControllerServlet {
         }
 
         try {
-            Optional<Account> accountByName = AccountDataAccess.getInstance().getOne(username.get());
-            Optional<Account> accountByEmail = AccountDataAccess.getInstance().getOne(email.get());
+            AccountDataAccess dataAccess = new AccountDataAccess();
+            Optional<Account> accountByName = dataAccess.getOne(username.get());
+            Optional<Account> accountByEmail = dataAccess.getOne(email.get());
             if (accountByName.isPresent() || accountByEmail.isPresent()) {
                 response.setStatus(HttpServletResponse.SC_CONFLICT);
                 return;
@@ -52,7 +53,7 @@ public class Register extends ControllerServlet {
             displayName.ifPresent(newAccount::setDisplayName);
             newAccount.setEmail(email.get());
             newAccount.setPassword(hash);
-            AccountDataAccess.getInstance().insertAndGetIdentifier(newAccount);
+            dataAccess.insertAndGetIdentifier(newAccount);
             session.setAttribute("user", newAccount);
             Logger.getLogger(Register.class.getName()).log(Level.INFO, "Registered account: " + newAccount.getUsername() + " [" + newAccount.getId() + "]");
             response.setStatus(HttpServletResponse.SC_CREATED);

@@ -20,12 +20,13 @@ public class DeleteAccount extends ControllerServlet implements Filter {
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) {
         try {
+            AccountDataAccess dataAccess = new AccountDataAccess();
             Optional<Integer> id = Optional.ofNullable(request.getParameter("id")).map(Integer::parseInt);
             if (!id.isPresent()) {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST);
                 return;
             }
-            if (AccountDataAccess.getInstance().delete(id.get()) == 1) {
+            if (dataAccess.delete(id.get()) == 1) {
                 response.setStatus(HttpServletResponse.SC_OK);
             } else {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);

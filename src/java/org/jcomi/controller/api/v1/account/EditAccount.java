@@ -41,8 +41,8 @@ public class EditAccount extends ControllerServlet {
             Optional<String> displayName = Optional.ofNullable(request.getParameter("display-name"));
             Optional<String> email = Optional.ofNullable(request.getParameter("email"));
             Optional<String> password = Optional.ofNullable(request.getParameter("password")).map(MD5Util::md5);
-
-            Optional<Account> accountOptional = AccountDataAccess.getInstance().getOne(id.get());
+            AccountDataAccess dataAccess = new AccountDataAccess();
+            Optional<Account> accountOptional = dataAccess.getOne(id.get());
             if (!accountOptional.isPresent()) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
                 return;
@@ -61,7 +61,7 @@ public class EditAccount extends ControllerServlet {
                 isUploader.ifPresent(account::setUploader);
             }
 
-            if (AccountDataAccess.getInstance().update(account) == 1) {
+            if (dataAccess.update(account) == 1) {
                 response.setStatus(HttpServletResponse.SC_OK);
             } else {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
