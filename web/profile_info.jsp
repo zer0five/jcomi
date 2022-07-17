@@ -20,20 +20,20 @@
                 <div class=" p-5">
                     <div class="row">
                         <div class="col-lg-8 mx-auto ">
-                            <ul class="nav nav-tabs bg-light">
+                            <ul class="nav nav-tabs bg-transparent">
                                 <li class="nav-item">
                                     <a class="nav-link active fw-bold" aria-current="page" href="profile.html">Profile</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" href="change_password.jsp">Change Password</a>
+                                    <a class="nav-link text-dark" href="${pageContext.request.contextPath}/change_password.jsp">Change Password</a>
                                 </li>
                             </ul>
-                            <div class="border rounded-bottom shadow-lg p-3">
+                            <div class="border border-top-0 rounded-bottom shadow-lg p-3">
                                 <h5 class="text-dark fw-bold text-truncate text-decoration-none">Account Information</h5>
                                 <img class="rounded-circle img-thumbnail d-block text-center mx-auto" width="128px"
-                                     src="https://via.placeholder.com/128" alt="">
+                                     src="${sessionScope.user.avatar}" alt="">
                                 <div class="d-flex justify-content-center m-3">
-                                    <a href="https://en.gravatar.com/" target="_blank" class="btn btn-dark rounded-pill "> Change Avatar </a>
+                                    <a href="https://gravatar.com/" target="_blank" class="btn btn-dark rounded-pill "> Change Avatar </a>
                                 </div>
                                 <form action="${pageContext.request.contextPath}/authentication/login" method="post"
                                       class="row g-3 needs-validation p-3" novalidate>

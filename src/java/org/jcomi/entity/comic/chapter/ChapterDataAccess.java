@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.logging.Logger;
 
 public class ChapterDataAccess extends DataAccessObject<Chapter> {
     public ChapterDataAccess() {
@@ -127,21 +129,39 @@ public class ChapterDataAccess extends DataAccessObject<Chapter> {
         return pages;
     }
 
-    public int addPages(int chapterId, List<Page> pages) throws SQLException {
+    public int addPages(List<Page> pages) throws SQLException {
         StringBuilder sql = new StringBuilder();
-        List<String> values = new ArrayList<>();
-        sql.append("INSERT INTO [Page] ");
-        sql.append("([Chapter_ID], [Ordinal], [Image_URL]) ");
-        sql.append("VALUES ");
+        List<Object> values = new ArrayList<>();
         for (Page page : pages) {
-            sql.append("(?, ?, ?), ");
-            values.add(String.valueOf(chapterId));
-            values.add(String.valueOf(page.getOrdinal()));
+            sql.append("INSERT INTO [Page] ");
+            sql.append("([Chapter_ID], [Ordinal], [Image_URL]) ");
+            sql.append("VALUES ");
+            sql.append("(?, ?, ?);");
+            values.add(page.getChapterId());
+            values.add(page.getOrdinal());
             values.add(page.getImageUrl());
         }
-        sql.delete(sql.length() - 2, sql.length());
         return sqlUpdate(sql.toString(), values.toArray());
     }
 
 
+    public Optional<Chapter> getChapter(int comicId, int chapterOrdinal) {
+        try (ResultSet resultSet = sqlQuery(
+            "SELECT [ID], [Comic_ID], [Title], [Ordinal], [Upload_Date] " +
+                "FROM [Chapter] " +
+                "WHERE [Comic_ID] = ? AND [Ordinal] = ?",
+            comicId,
+            chapterOrdinal
+        )) {
+            if (resultSet.next()) {
+                Chapter chapter = createObject(resultSet);
+                return Optional.of(chapter);
+            } else {
+                return Optional.empty();
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(ChapterDataAccess.class.getName()).severe(e.getMessage());
+            return Optional.empty();
+        }
+    }
 }

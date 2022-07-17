@@ -19,7 +19,7 @@
                 <div class=" p-5">
                     <div class="row">
                         <div class="col-lg-8 mx-auto ">
-                            <ul class="nav nav-tabs bg-light">
+                            <ul class="nav nav-tabs bg-transparent">
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" aria-current="page" href="profile_info.jsp">Profile</a>
                                 </li>
@@ -27,7 +27,7 @@
                                     <a class="nav-link  active fw-bold" href="change_password.jsp">Change Password</a>
                                 </li>
                             </ul>
-                            <div class="border rounded-bottom shadow-lg p-3">
+                            <div class="border border-top-0 rounded-bottom shadow-lg p-3">
                                 <h5 class="text-dark fw-bold text-truncate text-decoration-none">Change Password</h5>
                                 <form action="${pageContext.request.contextPath}/authentication/login" method="post"
                                       class="row g-3 needs-validation p-3" novalidate>

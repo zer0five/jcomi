@@ -3,6 +3,7 @@ package org.jcomi.entity.comic.chapter;
 import lombok.Data;
 import org.jcomi.entity.DataTransferObject;
 
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -31,6 +32,6 @@ public class Page implements DataTransferObject {
         this.id = resultSet.getInt("ID");
         this.chapterId = resultSet.getInt("Chapter_ID");
         this.ordinal = resultSet.getInt("Ordinal");
-        this.imageUrl = resultSet.getString("Image_URL");
+        this.imageUrl = resultSet.getString("Image_URL").replace("\\", File.separator);
     }
 }

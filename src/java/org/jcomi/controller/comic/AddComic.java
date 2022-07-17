@@ -24,9 +24,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @WebServlet(name = "AddComic", value = "/comic/add",
-        initParams = {
-            @WebInitParam(name = "uploadPath", value = "/uploads/comic")
-        }
+    initParams = {
+        @WebInitParam(name = "uploadPath", value = "/uploads/comic")
+    }
 )
 @MultipartConfig
 public class AddComic extends ControllerServlet {
@@ -51,8 +51,9 @@ public class AddComic extends ControllerServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
             request.getRequestDispatcher("/comic/add.jsp").forward(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(AddComic.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            Logger.getLogger(AddComic.class.getName()).log(Level.SEVERE, "Error when add comic", e);
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -60,7 +61,7 @@ public class AddComic extends ControllerServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         try {
             Optional<Object> rawAccount = Optional.ofNullable(request.getSession(false))
-                    .map(session -> session.getAttribute("user"));
+                .map(session -> session.getAttribute("user"));
             if (!rawAccount.isPresent()) {
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
                 return;
@@ -70,12 +71,9 @@ public class AddComic extends ControllerServlet {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN);
                 return;
             }
-            if (request.getParameterMap().isEmpty()) {
-                Logger.getGlobal().warning("Empty!!");
-            }
             request.getParameterMap().forEach((key, value) -> {
                 for (String v : value) {
-                    Logger.getGlobal().info(key + ": " + v);
+                    System.out.println(key + ": " + v);
                 }
             });
             Optional<String> name = Optional.ofNullable(request.getParameter("name")).filter(s -> !s.isEmpty());
@@ -84,7 +82,7 @@ public class AddComic extends ControllerServlet {
             Optional<String> altName = Optional.ofNullable(request.getParameter("alt-name")).filter(s -> !s.isEmpty());
             Optional<Part> cover = Optional.ofNullable(request.getPart("cover-image"));
             if (!name.isPresent()) {
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST);
                 return;
             }
             Comic comic = new Comic();
@@ -93,20 +91,19 @@ public class AddComic extends ControllerServlet {
             author.ifPresent(comic::setAuthor);
             altName.ifPresent(comic::setAltName);
             comic.setUploaderId(account.getId());
+            ComicDataAccess dataAccess = new ComicDataAccess();
+            dataAccess.insertAndGetIdentifier(comic);
+
             if (cover.isPresent()) {
                 String url = uploadCover(cover.get(), comic);
                 comic.setCover(url);
             }
-            ComicDataAccess dataAccess = new ComicDataAccess();
-            comic.setId((int) dataAccess.insertAndGetIdentifier(comic));
-            Optional<String[]> genres = Optional.ofNullable(request.getParameterValues("genres")).filter(s -> s.length > 0);
+            Optional<String[]> genres = Optional.ofNullable(request.getParameterValues("genres[]")).filter(s -> s.length > 0);
 
             GenreDataAccess genreDataAccess = new GenreDataAccess();
             ComicGenreDataAccess comicGenreDataAccess = new ComicGenreDataAccess();
             if (genres.isPresent()) {
-                   log("genres");
                 for (String genre : genres.get()) {
-                    log(genre);
                     Optional<Genre> genreEntity = genreDataAccess.getOne(genre);
                     if (genreEntity.isPresent()) {
                         ComicGenre comicGenre = new ComicGenre(comic, genreEntity.get());

@@ -59,16 +59,16 @@
                 <jsp:useBean id="comicData" class="org.jcomi.entity.comic.ComicDataAccess" scope="request"/>
                 <c:forEach var="genre" items="${comicData.getGenre(requestScope.comic)}">
                     <span class="badge rounded-pill" style="background-color: #54BAB9;">
-                        <a href="" class="text-decoration-none text-light">${genre.genre}</a>
+                        <a href="${pageContext.request.contextPath}/comic/search?genre=${genre.genre}" class="text-decoration-none text-light">${genre.genre}</a>
                     </span>
                 </c:forEach>
                 <div class="d-flex justify-content-start">
                     <div class="p-2 bd-highlight ps-0">
-                        <button type="button" class="btn mt-3 btn-sm btn-outline"
+                        <a class="btn mt-3 btn-sm btn-outline" href="${pageContext.request.contextPath}/comic/view?id=${requestScope.comic.id}&chapter=1"
                                 style="background-color: #CEE5D0;">
                             <i class="bi bi-book" aria-hidden="true"></i>
                             <span class="ms-1 mb-1">Read</span>
-                        </button>
+                        </a>
                     </div>
 <%--                    <div class="p-2 bd-highlight">--%>
 <%--                        <button type="button" class="btn mt-3 btn-sm " style="background-color: #FCF8E8;">--%>
@@ -95,18 +95,18 @@
             <i class="bi bi-inboxes" aria-hidden="true"></i>
             Chapter
         </h5>
-        <div class="container" style="height:500px; overflow:auto;">
+        <div class="container" style="height:500px; overflow-y: scroll;">
 
             <jsp:useBean id="chapterData" class="org.jcomi.entity.comic.chapter.ChapterDataAccess" scope="request"/>
-            <div class="border p-3">
+            <div class="border p-3 h-100">
                 <ul class="list-group">
                     <c:forEach var="chapter" items="${chapterData.getChapters(requestScope.comic.id)}">
                         <li class="list-group-item">
-                            <a href="${pageContext.request.contextPath}/comic/view?id=${requestScope.comic.id}&chapter=${chapter.ordinal}" class="text-decoration-none text-dark w-100">
-                                <span class="float-start">
-                                    Chapter ${chapter.ordinal} - ${chapter.title}
+                            <a href="${pageContext.request.contextPath}/comic/view?id=${requestScope.comic.id}&chapter=${chapter.ordinal}" class="row text-decoration-none text-dark w-100">
+                                <span class="col">
+                                    Chapter ${chapter.ordinal} <c:if test="${!chapter.title.isEmpty()}">- ${chapter.title}</c:if>
                                 </span>
-                                <span class="float-end">
+                                <span class="col-auto">
                                         ${chapter.uploadDate}
                                 </span>
                             </a>

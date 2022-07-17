@@ -28,6 +28,7 @@
         /*}*/
 
         .img-container {
+            display: flex;
             position: relative;
             background: #dfdfdf;
             margin: 0 auto;
@@ -38,35 +39,36 @@
             max-width: 800px;
         }
 
-        /*#main-scrollbar {*/
-        /*    overflow: hidden;*/
-        /*    width: 100%;*/
-        /*    height: 100%;*/
-        /*}*/
+/*        #main-scrollbar {
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+        }*/
+/*
+        .scrollbar-track {
+            -webkit-transition-duration: 225ms !important;
+            -o-transition-duration: 225ms !important;
+            transition-duration: 225ms !important;
+            -webkit-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+            -o-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+            background-color: transparent !important;
+            z-index: 9999 !important;
+        }
 
-        /*.scrollbar-track {*/
-        /*    -webkit-transition-duration: 225ms !important;*/
-        /*    -o-transition-duration: 225ms !important;*/
-        /*    transition-duration: 225ms !important;*/
-        /*    -webkit-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;*/
-        /*    -o-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;*/
-        /*    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;*/
-        /*    background-color: transparent !important;*/
-        /*    z-index: 9999 !important;*/
-        /*}*/
-
-        /*.scrollbar-track .scrollbar-thumb {*/
-        /*    background-color: rgba(255, 177, 62, 0.80) !important;*/
-        /*}*/
+        .scrollbar-track .scrollbar-thumb {
+            background-color: rgba(255, 177, 62, 0.80) !important;
+        }*/
     </style>
 </head>
 <body>
-<jsp:include page="/navbar/nav.jsp"/>
-<main id="main-scrollbar" data-scrollbar="true" class="my-3">
+<main id="main-scrollbar" data-scrollbar="true">
+    <jsp:include page="/navbar/nav.jsp"/>
+    <jsp:include page="/back_to_top_btn.jsp"/>
     <div class="scroll-content">
         <jsp:useBean id="chapterData" class="org.jcomi.entity.comic.chapter.ChapterDataAccess"/>
 
-        <div id="comic" class="d-block">
+        <div id="comic" class="d-block my-3">
             <c:set var="list" value="${chapterData.getPages(requestScope.chapter.id)}"/>
             <c:if test="${list.isEmpty()}">
                 <div class="center">
@@ -84,37 +86,26 @@
             </c:if>
         </div>
     </div>
-    <%--    <div class="scrollbar-track scrollbar-track-x">--%>
-    <%--        <div class="scrollbar-thumb scrollbar-thumb-x"></div>--%>
-    <%--    </div>--%>
-    <%--    <div class="scrollbar-track scrollbar-track-y">--%>
-    <%--        <div class="scrollbar-thumb scrollbar-thumb-y"></div>--%>
-    <%--    </div>--%>
+    <div class="scrollbar-track scrollbar-track-x">
+        <div class="scrollbar-thumb scrollbar-thumb-x"></div>
+    </div>
+    <div class="scrollbar-track scrollbar-track-y">
+        <div class="scrollbar-thumb scrollbar-thumb-y"></div>
+    </div>
+    <jsp:include page="/footer.jsp"/>
 </main>
-<%--<script src="${pageContext.request.contextPath}/js/smooth-scrollbar.js"></script>--%>
-<%--<script src="${pageContext.request.contextPath}/js/plugins/overscroll.js"></script>--%>
-<%--<script type="text/javascript">--%>
-<%--    var Scrollbar = window.Scrollbar;--%>
-<%--    Scrollbar.use(window.OverscrollPlugin);--%>
-<%--    Scrollbar.initAll({damping:.08,thumbMinSize:20,renderByPixels:true,continuousScrolling:true,alwaysShowTracks:false,delegateTo:null,plugins:{overscroll:true}});--%>
-<%--</script>--%>
+<!--<script src="${pageContext.request.contextPath}/js/smooth-scrollbar.js"></script>
+<script src="${pageContext.request.contextPath}/js/plugins/overscroll.js"></script>
+<script type="text/javascript">
+    var Scrollbar = window.Scrollbar;
+    Scrollbar.use(window.OverscrollPlugin);
+    Scrollbar.initAll({damping:.08,thumbMinSize:20,renderByPixels:true,continuousScrolling:true,alwaysShowTracks:false,delegateTo:null,plugins:{overscroll:true}});
+</script>-->
 <jsp:include page="/script.jsp"/>
 <script src="${pageContext.request.contextPath}/js/images-loaded.min.js"></script>
 <script type="text/javascript">
-    var counter = 1;
-    <%--function addNewPic(container, url) {--%>
-    <%--    let img = $(`<img id="pic-\${counter}" class="center" src="${pageContext.request.contextPath}/assets/loading.svg" data-image="\${url}" alt="\${counter}"/>`);--%>
-    <%--    let imgContainer = $('<div class="img-container" style="width: 800px; height: 800px;"></div>');--%>
-    <%--    imgContainer.append(img);--%>
-    <%--    container.append(imgContainer);--%>
-    <%--    counter++;--%>
-    <%--    return img;--%>
-    <%--}--%>
     $(document).ready(function () {
-        $('.img-container img').each(function() {
-            let img = $(this);
-            execute(img);
-        });
+        $('.img-container img').each(function() {execute($(this))});
     });
 
 
@@ -156,14 +147,20 @@
             },
         })
             .done(data => {
-                console.log("Image loaded");
                 let blob = new Blob([data], {
                     type: "image/webp",
                 });
                 let src = window.URL.createObjectURL(blob);
                 element.html(data)
                     .imagesLoaded()
-                    .then(() => element.attr("src", src));
+                    .then(() => {
+                        element.attr("src", src);
+                        let parent = element.parent();
+                        element.on("load", function () {
+                            parent.height(this.height);
+                            parent.width(this.width);
+                        });
+                });
             })
             .fail(() => element.attr("src", "assets/not-found.svg"));
     }

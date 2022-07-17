@@ -22,12 +22,10 @@
             <div class="row">
                 <!--Grid column-->
                 <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-                    <a href="index.jsp"> <img src="${pageContext.request.contextPath}/assets/logo.svg" alt="logo" style="width: 200px"></a>
+                    <a href="${pageContext.request.contextPath}/"> <img src="${pageContext.request.contextPath}/assets/logo.svg" alt="logo" style="width: 200px"></a>
 
-                    <p class="mt-3">
-                        Mọi thông tin và hình ảnh trên website đều được sưu tầm trên Internet. Chúng tôi không sở hữu
-                        hay chịu trách nhiệm bất kỳ thông tin nào trên web này. Nếu làm ảnh hưởng đến cá nhân hay tổ
-                        chức nào, khi được yêu cầu, chúng tôi sẽ xem xét và gỡ bỏ ngay lập tức.
+                    <p class="mt-3 " style="text-align: justify">
+                        All information and images on the website are collected from the Internet. We do not own or be responsible for any information on this website. If it affects any individual or organization, when requested, we will review and remove it immediately.
                     </p>
                 </div>
                 <!--Grid column-->
@@ -36,12 +34,12 @@
                 <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
                     <h5 class="text-uppercase pb-4">Quick access</h5>
 
-                    <ul class="list-unstyled mb-0 ">
+                    <ul class="list-unstyled mb-0">
                         <li>
-                            <a href="profile_info.jsp">Profile</a>
+                            <a href="${pageContext.request.contextPath}/profile">Profile</a>
                         </li>
                         <li>
-                            <a href="search_comic.jsp">Search comic</a>
+                            <a href="${pageContext.request.contextPath}/comic/search">Search comic</a>
                         </li>
                         <li>
                             <a href="${pageContext.request.contextPath}/comic/add">Add comic</a>
@@ -54,7 +52,14 @@
                 <!--Grid column-->
                 <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
                     <h5 class="text-uppercase">Contact Us</h5>
-                    <a href="mailto:zerofive@gmail.com"><i class="fa fa-envelope-o mr-3"></i> zerofive@gmail.com</a>
+                    <ul class="list-unstyled mb-0 ">
+                        <li>
+                            <a href="mailto:zerofive@gmail.com" class="text-decoration-none"><i class="bi bi-envelope me-2"></i> zerofive@gmail.com</a>                    
+                        </li>
+                        <li>
+                            <a href="https://github.com/zer0five" class="text-decoration-none"><i class="bi bi-github me-2"></i> Github</a>
+                        </li>
+                    </ul>
                 </div>
                 <!--Grid column-->
             </div>

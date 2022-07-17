@@ -1,20 +1,18 @@
 package org.jcomi.entity.comic;
 
 import org.jcomi.entity.DataAccessObject;
+import org.jcomi.entity.genre.Genre;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 public class ComicDataAccess extends DataAccessObject<Comic> {
-
     public ComicDataAccess() {
         super();
     }
-
     @Override
     protected Comic createObject(ResultSet resultSet) throws SQLException {
         return new Comic(resultSet);
@@ -23,33 +21,33 @@ public class ComicDataAccess extends DataAccessObject<Comic> {
     @Override
     public int insert(Comic object) throws SQLException {
         return sqlUpdate(
-                "INSERT INTO [Comic] "
-                + "([Name], [Alt_Name], [Author], [Cover], [Description], [Views], [Uploader_ID]) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?)",
-                object.getName(),
-                object.getAltName(),
-                object.getAuthor(),
-                object.getCover(),
-                object.getDescription(),
-                object.getViews(),
-                object.getUploaderId()
+            "INSERT INTO [Comic] " +
+                "([Name], [Alt_Name], [Author], [Cover], [Description], [Views], [Uploader_ID]) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)",
+            object.getName(),
+            object.getAltName(),
+            object.getAuthor(),
+            object.getCover(),
+            object.getDescription(),
+            object.getViews(),
+            object.getUploaderId()
         );
     }
 
     @Override
     public Object insertAndGetIdentifier(Comic object) throws SQLException {
-        try ( ResultSet resultSet = sqlQuery(
-                "INSERT INTO [Comic] "
-                + "([Name], [Alt_Name], [Author], [Cover], [Description], [Views], [Uploader_ID]) "
-                + "OUTPUT INSERTED.ID "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?)",
-                object.getName(),
-                object.getAltName(),
-                object.getAuthor(),
-                object.getCover(),
-                object.getDescription(),
-                object.getViews(),
-                object.getUploaderId()
+        try (ResultSet resultSet = sqlQuery(
+            "INSERT INTO [Comic] " +
+                "([Name], [Alt_Name], [Author], [Cover], [Description], [Views], [Uploader_ID]) " +
+                "OUTPUT INSERTED.ID " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)",
+            object.getName(),
+            object.getAltName(),
+            object.getAuthor(),
+            object.getCover(),
+            object.getDescription(),
+            object.getViews(),
+            object.getUploaderId()
         )) {
             if (resultSet.next()) {
                 int id = resultSet.getInt(1);
@@ -64,17 +62,17 @@ public class ComicDataAccess extends DataAccessObject<Comic> {
     @Override
     public int update(Comic object) throws SQLException {
         int result = sqlUpdate(
-                "UPDATE [Comic] SET [Name] = ?, [Alt_Name] = ?, [Author] = ?, [Cover] = ?, [Description] = ?, [Views] = ? WHERE [ID] = ?",
-                object.getName(),
-                object.getAltName(),
-                object.getAuthor(),
-                object.getCover(),
-                object.getDescription(),
-                object.getViews(),
-                object.getId()
+            "UPDATE [Comic] SET [Name] = ?, [Alt_Name] = ?, [Author] = ?, [Cover] = ?, [Description] = ?, [Views] = ? WHERE [ID] = ?",
+            object.getName(),
+            object.getAltName(),
+            object.getAuthor(),
+            object.getCover(),
+            object.getDescription(),
+            object.getViews(),
+            object.getId()
         );
         if (result != 0) {
-            try ( ResultSet resultSet = selectById(object.getId())) {
+            try (ResultSet resultSet = selectById(object.getId())) {
                 if (resultSet.next()) {
                     object.sync(resultSet);
                 } else {
@@ -107,7 +105,7 @@ public class ComicDataAccess extends DataAccessObject<Comic> {
     @Override
     public List<Comic> get(Object identifier) throws SQLException {
         List<Comic> comics = new ArrayList<>();
-        try ( ResultSet resultSet = sqlQuery("SELECT * FROM [Comic] WHERE [ID] = ? OR [Genre] = ?", identifier, identifier)) {
+        try (ResultSet resultSet = sqlQuery("SELECT * FROM [Comic] WHERE [ID] = ?", identifier)) {
             while (resultSet.next()) {
                 comics.add(createObject(resultSet));
             }
@@ -117,7 +115,7 @@ public class ComicDataAccess extends DataAccessObject<Comic> {
 
     public List<Comic> getAll() throws SQLException {
         List<Comic> comics = new ArrayList<>();
-        try ( ResultSet resultSet = sqlQuery("SELECT * FROM [Comic]")) {
+        try (ResultSet resultSet = sqlQuery("SELECT * FROM [Comic]")) {
             while (resultSet.next()) {
                 comics.add(createObject(resultSet));
             }
@@ -127,11 +125,25 @@ public class ComicDataAccess extends DataAccessObject<Comic> {
 
     @Override
     public Optional<Comic> getOne(Object identifier) throws SQLException {
-        try ( ResultSet resultSet = selectById(identifier)) {
+        try (ResultSet resultSet = selectById(identifier)) {
             if (resultSet.next()) {
                 return Optional.of(new Comic(resultSet));
             }
         }
         return Optional.empty();
+    }
+
+    public List<Genre> getGenre(Comic comic) throws SQLException {
+        String sql = "select g.ID, g.Genre, g.Description from Comic c \n" +
+            "join Comic_Genre cg on c.ID = cg.Comic_ID\n" +
+            "join Genre g on g.ID = cg.Genre_ID\n" +
+            "WHERE c.ID = ?";
+        List<Genre> genres = new ArrayList<>();
+        try (ResultSet resultSet = sqlQuery(sql, comic.getId())) {
+            while (resultSet.next()) {
+                genres.add(new Genre(resultSet));
+            }
+        }
+        return genres;
     }
 }
