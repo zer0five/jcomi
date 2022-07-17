@@ -25,7 +25,7 @@
                                     <a class="nav-link active fw-bold" aria-current="page" href="profile.html">Profile</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" href="changePassword.html">Change Password</a>
+                                    <a class="nav-link text-dark" href="change_password.jsp">Change Password</a>
                                 </li>
                             </ul>
                             <div class="border rounded-bottom shadow-lg p-3">
@@ -33,7 +33,7 @@
                                 <img class="rounded-circle img-thumbnail d-block text-center mx-auto" width="128px"
                                      src="https://via.placeholder.com/128" alt="">
                                 <div class="d-flex justify-content-center m-3">
-                                    <a href="" class="btn btn-dark rounded-pill "> Change Avatar </a>
+                                    <a href="https://en.gravatar.com/" target="_blank" class="btn btn-dark rounded-pill "> Change Avatar </a>
                                 </div>
                                 <form action="${pageContext.request.contextPath}/authentication/login" method="post"
                                       class="row g-3 needs-validation p-3" novalidate>
@@ -42,7 +42,7 @@
                                             <i class="bi bi-envelope"></i>
                                         </label>
                                         <input class="form-control rounded-pill rounded-start" type="email" name="email"
-                                               id="email" value="abc@xyz.com" placeholder="Your Email">
+                                               id="email" value="${sessionScope.user.email}" placeholder="Your Email">
 
                                     </div>
                                     <div class="input-group col-12">
@@ -51,7 +51,7 @@
                                             <i class="bi bi-person-badge" aria-hidden="true"></i>
                                         </label>
                                         <input class="form-control rounded-pill rounded-start" type="text"
-                                               name="display-name" id="display-name" value="Name" placeholder="Display Name">
+                                               name="display-name" id="display-name" value="${sessionScope.user.displayName}" placeholder="Display Name">
                                     </div>
                                     <div class="col-12">
                                         <button class="btn btn-success rounded-pill text-center text-light float-end me-3"
@@ -69,6 +69,6 @@
             </div>
         </div>
     </section>
-   
+    <jsp:include page="footer.jsp"/>
 </body>
 </html>
