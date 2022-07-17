@@ -43,7 +43,7 @@
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                         <div class="form-check" data-bs-toggle="tooltip" title="${genre.description}">
                             <input class="form-check-input" type="checkbox" value="${genre.id}" id="genre-${genre.id}"
-                                   name="genres[${i}]">
+                                   name="genres[]">
                             <label class="form-check-label" for="genre-${genre.id}">
                                     ${genre.genre}
                             </label>
@@ -100,7 +100,8 @@
         let xhr = new XMLHttpRequest();
         xhr.onload = function () {
             if (xhr.status === 200) {
-                alert("Comic created successfully");
+                let id = JSON.parse(xhr.responseText).id;
+                window.location.href = "${pageContext.request.contextPath}/comic/information?id=" + id;
             } else {
                 alert("Error: " + xhr.status);
             }

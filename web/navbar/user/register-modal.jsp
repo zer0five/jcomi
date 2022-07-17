@@ -3,7 +3,8 @@
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content border-0 bg-transparent">
-            <div class="modal-header bg-info bg-gradient rounded-pill shadow mx-3" style="z-index: 100; transform: translateY(50%)">
+            <div class="modal-header bg-info bg-gradient rounded-pill shadow mx-3"
+                 style="z-index: 100; transform: translateY(50%)">
                 <h5 class="modal-title text-light">
                     <i class="bi bi-signpost me-3" aria-hidden="true"></i>
                     Register

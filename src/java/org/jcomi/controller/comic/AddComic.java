@@ -34,7 +34,7 @@ public class AddComic extends ControllerServlet {
     private String uploadCover(Part coverImage, Comic comic) {
         try {
             Path virtualPath = Paths.get(getServletConfig().getInitParameter("uploadPath"), String.valueOf(comic.getId()));
-            Path realPath = Paths.get(getServletContext().getRealPath(virtualPath.toString()));
+            Path realPath = Paths.get(getServletContext().getRealPath(""), virtualPath.toString());
             Files.createDirectories(realPath); // create directory if not exists
             String fileName = "cover.webp"; // coverImage.getSubmittedFileName();
             Path filePath = Paths.get(realPath.toString(), fileName); // realPath + fileName
@@ -104,7 +104,9 @@ public class AddComic extends ControllerServlet {
             GenreDataAccess genreDataAccess = new GenreDataAccess();
             ComicGenreDataAccess comicGenreDataAccess = new ComicGenreDataAccess();
             if (genres.isPresent()) {
+                   log("genres");
                 for (String genre : genres.get()) {
+                    log(genre);
                     Optional<Genre> genreEntity = genreDataAccess.getOne(genre);
                     if (genreEntity.isPresent()) {
                         ComicGenre comicGenre = new ComicGenre(comic, genreEntity.get());
