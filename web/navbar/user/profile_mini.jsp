@@ -13,7 +13,7 @@
             Hello, ${sessionScope.user.displayName}
         </div>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" href="#"><i class="bi bi-person-circle me-2"></i>Profile</a>
+            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/profile_info.jsp"><i class="bi bi-person-circle me-2"></i>Profile</a>
             </li>
             <li>
                 <hr class="dropdown-divider">

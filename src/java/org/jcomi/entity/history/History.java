@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 @Data
 public class History implements DataTransferObject {
+
     private int id;
     private int accountId;
     private int chapterId;
