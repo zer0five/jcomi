@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 public class DeleteAccount extends ControllerServlet implements Filter {
 
     @Override
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response) {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
             AccountDataAccess dataAccess = new AccountDataAccess();
             Optional<Integer> id = Optional.ofNullable(request.getParameter("id")).map(Integer::parseInt);
@@ -27,7 +27,7 @@ public class DeleteAccount extends ControllerServlet implements Filter {
                 return;
             }
             if (dataAccess.delete(id.get()) == 1) {
-                response.setStatus(HttpServletResponse.SC_OK);
+                response.sendRedirect(request.getContextPath()); // redirect to home page
             } else {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
@@ -48,7 +48,7 @@ public class DeleteAccount extends ControllerServlet implements Filter {
         HttpServletResponse response = (HttpServletResponse) resp;
         try {
             Optional<Object> rawAccount = Optional.ofNullable(request.getSession(false))
-                .map(s -> s.getAttribute("user"));
+                    .map(s -> s.getAttribute("user"));
             if (!rawAccount.isPresent()) {
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
                 return;

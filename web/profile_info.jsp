@@ -1,9 +1,3 @@
-<%-- 
-    Document   : profile_info
-    Created on : Jul 16, 2022, 5:09:55 PM
-    Author     : Thai Binh Quoc Viet-CE160378
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -30,18 +24,20 @@
                             </ul>
                             <div class="border border-top-0 rounded-bottom shadow-lg p-3">
                                 <h5 class="text-dark fw-bold text-truncate text-decoration-none">Account Information</h5>
+                                <input type="hidden" name="id" value="${sessionScope.user.id}"/>
+                                <input type="hidden" name="callback" value="${pageContext.request.requestURI}"/>
                                 <img class="rounded-circle img-thumbnail d-block text-center mx-auto" width="128px"
-                                     src="${sessionScope.user.avatar}" alt="">
+                                     src="${sessionScope.user.avatar}" alt="Profile picture">
                                 <div class="d-flex justify-content-center m-3">
                                     <a href="https://gravatar.com/" target="_blank" class="btn btn-dark rounded-pill "> Change Avatar </a>
                                 </div>
-                                <form action="${pageContext.request.contextPath}/authentication/login" method="post"
+                                <form action="${pageContext.request.contextPath}/api/v1/account/edit" method="POST"
                                       class="row g-3 needs-validation p-3" novalidate>
                                     <div class="input-group col-12 mb-2">
                                         <label for="email" class="input-group-text rounded-pill rounded-end bg-light px-3">
                                             <i class="bi bi-envelope"></i>
                                         </label>
-                                        <input class="form-control rounded-pill rounded-start" type="email" name="email"
+                                        <input class="form-control rounded-pill rounded-start" type="email" name="new-email"
                                                id="email" value="${sessionScope.user.email}" placeholder="Your Email">
 
                                     </div>
@@ -51,7 +47,7 @@
                                             <i class="bi bi-person-badge" aria-hidden="true"></i>
                                         </label>
                                         <input class="form-control rounded-pill rounded-start" type="text"
-                                               name="display-name" id="display-name" value="${sessionScope.user.displayName}" placeholder="Display Name">
+                                               name="new-display-name" id="display-name" value="${sessionScope.user.displayName}" placeholder="Display Name">
                                     </div>
                                     <div class="col-12">
                                         <button class="btn btn-success rounded-pill text-center text-light float-end me-3"

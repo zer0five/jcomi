@@ -1,5 +1,6 @@
 package org.jcomi.controller.authentication;
 
+import java.io.IOException;
 import org.jcomi.controller.ControllerServlet;
 import org.jcomi.entity.account.Account;
 import org.jcomi.entity.account.AccountDataAccess;
@@ -57,8 +58,14 @@ public class Register extends ControllerServlet {
             session.setAttribute("user", newAccount);
             Logger.getLogger(Register.class.getName()).log(Level.INFO, "Registered account: " + newAccount.getUsername() + " [" + newAccount.getId() + "]");
             response.setStatus(HttpServletResponse.SC_CREATED);
+            Optional<String> callback = Optional.ofNullable(request.getParameter("id")).filter(s -> !s.isEmpty());
+            if (callback.isPresent()) {
+                response.sendRedirect(callback.get());
+            } else {
+                response.sendRedirect(request.getContextPath()); // redirect to home page
+            }
 
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, "Error while registering account", e);
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }

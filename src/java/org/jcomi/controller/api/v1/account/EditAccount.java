@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 public class EditAccount extends ControllerServlet {
 
     @Override
-    protected void doPut(HttpServletRequest request, HttpServletResponse response) {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         try {
             HttpSession session = request.getSession(false);
             Object rawAccount = session.getAttribute("user");
@@ -38,9 +38,9 @@ public class EditAccount extends ControllerServlet {
                 return;
             }
 
-            Optional<String> displayName = Optional.ofNullable(request.getParameter("display-name"));
-            Optional<String> email = Optional.ofNullable(request.getParameter("email"));
-            Optional<String> password = Optional.ofNullable(request.getParameter("password")).map(MD5Util::md5);
+            Optional<String> displayName = Optional.ofNullable(request.getParameter("new-display-name"));
+            Optional<String> email = Optional.ofNullable(request.getParameter("new-email"));
+            Optional<String> password = Optional.ofNullable(request.getParameter("new-password")).map(MD5Util::md5);
             AccountDataAccess dataAccess = new AccountDataAccess();
             Optional<Account> accountOptional = dataAccess.getOne(id.get());
             if (!accountOptional.isPresent()) {
