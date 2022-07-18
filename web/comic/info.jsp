@@ -78,6 +78,12 @@
                                         <span class="ms-1 mb-1">Delete</span>
                                     </a>
                                 </div>
+                                <div class="p-2 bd-highlight ps-0">
+                                    <a class="btn mt-3 btn-sm btn-outline bg-danger" href="${pageContext.request.contextPath}/comic/chapter/add?id=${requestScope.comic.id}">
+                                        <i class="bi bi-x-lg" aria-hidden="true"></i>
+                                        <span class="ms-1 mb-1">Add chapter</span>
+                                    </a>
+                                </div>
                             </c:if>
                             <%--                    <div class="p-2 bd-highlight">--%>
                             <%--                        <button type="button" class="btn mt-3 btn-sm " style="background-color: #FCF8E8;">--%>
