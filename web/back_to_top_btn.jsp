@@ -1,9 +1,3 @@
-<%-- 
-    Document   : back_to_top_btn
-    Created on : Jul 16, 2022, 10:10:54 AM
-    Author     : Thai Binh Quoc Viet-CE160378
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!-- Back to top button -->
 <style>

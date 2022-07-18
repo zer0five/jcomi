@@ -24,8 +24,6 @@
                             </ul>
                             <div class="border border-top-0 rounded-bottom shadow-lg p-3">
                                 <h5 class="text-dark fw-bold text-truncate text-decoration-none">Account Information</h5>
-                                <input type="hidden" name="id" value="${sessionScope.user.id}"/>
-                                <input type="hidden" name="callback" value="${pageContext.request.requestURI}"/>
                                 <img class="rounded-circle img-thumbnail d-block text-center mx-auto" width="128px"
                                      src="${sessionScope.user.avatar}" alt="Profile picture">
                                 <div class="d-flex justify-content-center m-3">
@@ -33,13 +31,14 @@
                                 </div>
                                 <form action="${pageContext.request.contextPath}/api/v1/account/edit" method="POST"
                                       class="row g-3 needs-validation p-3" novalidate>
+                                    <input type="hidden" name="id" value="${sessionScope.user.id}"/>
+                                    <input type="hidden" name="callback" value="${pageContext.request.requestURI}"/>
                                     <div class="input-group col-12 mb-2">
                                         <label for="email" class="input-group-text rounded-pill rounded-end bg-light px-3">
                                             <i class="bi bi-envelope"></i>
                                         </label>
                                         <input class="form-control rounded-pill rounded-start" type="email" name="new-email"
                                                id="email" value="${sessionScope.user.email}" placeholder="Your Email">
-
                                     </div>
                                     <div class="input-group col-12">
                                         <label for="display-name"
@@ -55,7 +54,6 @@
                                             <i class="bi bi-box-arrow-in-right me-1" aria-hidden="true"></i>
                                             Save
                                         </button>
-
                                     </div>
                                 </form>
                             </div>

@@ -10,6 +10,7 @@
     </head>
     <body>
         <jsp:include page="/navbar/nav.jsp"/>
+        <jsp:include page="/back_to_top_btn.jsp"/>
 
         <div class="container">
             <div class="border rounded shadow-lg p-5">

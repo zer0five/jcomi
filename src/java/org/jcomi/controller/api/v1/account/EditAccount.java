@@ -62,7 +62,13 @@ public class EditAccount extends ControllerServlet {
             }
 
             if (dataAccess.update(account) == 1) {
-                response.setStatus(HttpServletResponse.SC_OK);
+                session.setAttribute("user", account);
+                Optional<String> callback = Optional.ofNullable(request.getParameter("id")).filter(s -> !s.isEmpty());
+                if (callback.isPresent()) {
+                    response.sendRedirect(callback.get());
+                } else {
+                    response.sendRedirect(request.getContextPath()); // redirect to home page
+                }
             } else {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
